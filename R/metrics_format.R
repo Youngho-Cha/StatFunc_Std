@@ -8,7 +8,7 @@
 #' @return A data.frame with columns: Metric, Estimate, Lower_95_CI, Upper_95_CI
 #' @export
 format_performance_output=function(metrics){
-  metric_names=setdiff(names(metrics),"confusion_matrix")
+  metric_names=setdiff(names(metrics),c("confusion_matrix","auc_result"))
 
   rows=list()
 
@@ -31,3 +31,4 @@ format_performance_output=function(metrics){
   rownames(df)=NULL
   return(df)
 }
+

@@ -33,7 +33,7 @@ calc_performance_metrics(
 \item{boot_n}{The number of Bootstrap sampling}
 }
 \value{
-A named list of calculated performance metrics
+A named list of calculated performance metrics, confusion matrix, result of pROC::roc
 }
 \description{
 Calculate diagnostic performance metrics

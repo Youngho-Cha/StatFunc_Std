@@ -7,7 +7,7 @@ date: "2025-06-18"
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo=FALSE)
-library(submission.package)
+library(calculate.metrics)
 library(epiR)
 library(pROC)
 library(dplyr)
@@ -52,7 +52,7 @@ kable(report_ready,caption="성능평가 지표",booktabs=TRUE) %>%
   kable_styling(full_width=F,position="center")
 
 # 성능 결과 저장
-save_performance_report(report_ready,format="csv")
+save_performance_report(report_ready,metrics)
 
 ```
 

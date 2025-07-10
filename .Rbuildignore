@@ -2,6 +2,12 @@
 ^renv\.lock$
 ^submission\.package\.Rproj$
 ^\.Rproj\.user$
-^doc$
 ^Meta$
 ^LICENSE\.md$
+^shiny\$
+^\.Rhistory$
+^data-raw\$
+^docker\$
+^report\$
+^tests\$
+^doc$

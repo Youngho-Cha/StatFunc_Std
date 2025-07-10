@@ -1,4 +1,4 @@
-Package: submission.package
+Package: calculate.metrics
 Title: Automated Calculation of Performance Metrics for IVD Clinical Performance Evaluation
 Version: 0.1.0
 Authors@R: 
@@ -12,12 +12,13 @@ Suggests:
     knitr,
     rmarkdown,
     ggplot2,
-    kableExtra
+    kableExtra,
+    stats
 VignetteBuilder: knitr
 Imports: 
     dplyr,
     epiR,
-    htmlTable,
+    openxlsx,
     pROC,
     utils
 Depends: 

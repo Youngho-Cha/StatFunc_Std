@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, include = FALSE}
 
-library(submission.package)
+library(calculate.metrics)
 library(epiR)
 library(pROC)
 library(dplyr)
@@ -30,7 +30,7 @@ AUC 등의 성능 지표를 계산하고 저장하는 전 과정을 보여줍니
 
 ```{r}
 
-library(submission.package)
+library(calculate.metrics)
 
 # 예제 데이터 불러오기
 data("example_data")
@@ -46,7 +46,7 @@ formatted=format_performance_output(metrics)
 report_ready=format_for_reporting(formatted,digits=3)
 
 # 리포트 저장
-save_performance_report(report_ready,format="csv")
+save_performance_report(report_ready,metrics)
 
 ```
 

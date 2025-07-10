@@ -13,7 +13,7 @@
 #' @importFrom epiR epi.tests
 #' @importFrom pROC roc auc ci.auc
 #'
-#' @return A named list of calculated performance metrics
+#' @return A named list of calculated performance metrics, confusion matrix, result of pROC::roc
 #' @export
 calc_performance_metrics=function(actual,predicted,score=NULL,
                                   metrics_to_calc=c("sensitivity","specificity",
@@ -164,6 +164,8 @@ calc_performance_metrics=function(actual,predicted,score=NULL,
       auc_ci=pROC::ci.auc(auc_result,method="bootstrap",boot.n=boot_n)
 
     result$auc=c(est=auc_value,lower=as.numeric(auc_ci[1]),upper=as.numeric(auc_ci[3]))
+    result$auc_result=auc_result
   }
   return(result)
 }
+

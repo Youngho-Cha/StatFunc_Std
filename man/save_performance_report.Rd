@@ -6,7 +6,7 @@
 \usage{
 save_performance_report(
   results_df,
-  format = "csv",
+  original_result,
   outdir = "results",
   filename = NULL
 )
@@ -14,7 +14,7 @@ save_performance_report(
 \arguments{
 \item{results_df}{A data.frame created by format_performance_output()}
 
-\item{format}{Output format: "csv" or "html"}
+\item{original_result}{A list created by calc_performance_metrics()}
 
 \item{outdir}{Output directory (default: "results")}
 
