@@ -22,13 +22,13 @@ It also calculates **100(1−α)% confidence intervals** for each metric.
 Install the package directly from GitHub using:
 
 ```r
-devtools::install_github("Youngho-Cha/Calculate-metrics-package-R")
+devtools::install_github("Youngho-Cha/Biostat_R_Standards")
 ```
 
 or
 
 ```r
-remotes::install_github("Youngho-Cha/Calculate-metrics-package-R")
+remotes::install_github("Youngho-Cha/Biostat_R_Standards")
 ```
 
 ---
@@ -48,7 +48,8 @@ metrics <- calc_performance_metrics(actual, predicted, score)
 formatted <- format_performance_output(metrics)
 report_ready <- format_for_reporting(formatted, digits = 3)
 
-save_performance_report(report_ready, metrics)
+save_performance_report(report_ready, metrics) # Save as excel(.xlsx) file
+save_performance_report_docx(report_ready, metrics) # Save as word(.docx) file
 ```
 
 ---
@@ -57,7 +58,7 @@ save_performance_report(report_ready, metrics)
 
 ### 🔹 1. `calc_performance_metrics()`
 
-Calculates key performance metrics and their confidence intervals.
+Calculates key performance metrics with their confidence intervals.
 
 **Usage:**
 ```r
@@ -81,7 +82,7 @@ calc_performance_metrics(actual, predicted, score,
 
 ### 🔹 2. `format_performance_output()`
 
-Formats the output of `calc_performance_metrics()` into an easy-to-read table.
+Formats the numerical output of `calc_performance_metrics()` into an easy-to-read table.
 
 **Usage:**
 ```r
@@ -93,7 +94,7 @@ format_performance_output(metrics)
 
 ### 🔹 3. `format_for_reporting()`
 
-Rounds all output values to the specified number of decimal places.
+Rounds numerical output values to the specified number of decimal places.
 
 **Usage:**
 ```r
@@ -104,13 +105,14 @@ format_for_reporting(df, digits=3)
 * df: the data frame formatted using the format_performance_output() function
 * digits: number of decimal places (default = 3)
 
-### 🔹 4. `save_performance_report()`
+### 🔹 4. `save_performance_report() / save_performance_report_docx()`
 
-Saves the formatted output of `format_performance_metrics()` to a specified excel file.
+Saves the formatted output of `format_performance_metrics()` to a specified excel/ word file.
 
 **Usage:**
 ```r
 save_performance_report(results_df, original_result, outdir = "results", filename = NULL)
+save_performance_report_docx(results_df, original_result, outdir = "results", filename = NULL)
 ```
 
 **Arguments:**
@@ -118,7 +120,7 @@ save_performance_report(results_df, original_result, outdir = "results", filenam
 * original_result: the output from the calc_performance_metrics() function
 * outdir: name of the output directory where the file will be saved (default = "results")
 * filename: name of the output file (default = NULL)
-
+  
 ---
 
 ## 📬 Contact
