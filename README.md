@@ -36,7 +36,7 @@ remotes::install_github("Youngho-Cha/Biostat_R_Standards")
 ## 💡 Example Usage
 
 ```r
-library(calculate.package)
+library(calculate.metrics)
 
 data("example_data")
 
