@@ -20,7 +20,12 @@ Imports:
     epiR,
     openxlsx,
     pROC,
-    utils
+    utils,
+    officer,
+    tidyr,
+    flextable,
+    utils,
+    grDevices
 Depends: 
     R (>= 3.5)
 LazyData: true

@@ -11,9 +11,15 @@ library(calculate.metrics)
 library(epiR)
 library(pROC)
 library(dplyr)
-library(htmlTable)
-library(knitr)
 library(kableExtra)
+library(knitr)
+library(grDevices)
+library(flextable)
+library(officer)
+library(openxlsx)
+library(utils)
+library(stats)
+library(tidyr)
 
 ```
 

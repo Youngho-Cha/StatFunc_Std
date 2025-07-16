@@ -20,6 +20,15 @@ library(calculate.metrics)
 library(epiR)
 library(pROC)
 library(dplyr)
+library(knitr)
+library(kableExtra)
+library(grDevices)
+library(flextable)
+library(officer)
+library(openxlsx)
+library(utils)
+library(stats)
+library(tidyr)
 
 ```
 

@@ -150,10 +150,12 @@ calc_performance_metrics=function(actual,predicted,score=NULL,
 
   if("auc" %in% metrics_to_calc){
     if(!is.null(score)){
-      auc_result=pROC::roc(actual,score)
+      if(ci_method_auc=="delong") auc_result=pROC::roc(actual,score,ci=T)
+      if(ci_method_auc=="bootstrap") auc_result=pROC::roc(actual,score,ci=T,ci.method="bootstrap",boot.n=boot_n)
     }
     else{
-      auc_result=pROC::roc(actual,predicted)
+      if(ci_method_auc=="delong") auc_result=pROC::roc(actual,predicted,ci=T)
+      if(ci_method_auc=="bootstrap") auc_result=pROC::roc(actual,predicted,ci=T,ci.method="bootstrap",boot.n=boot_n)
     }
 
     auc_value=as.numeric(pROC::auc(auc_result))
@@ -168,4 +170,5 @@ calc_performance_metrics=function(actual,predicted,score=NULL,
   }
   return(result)
 }
+
 
