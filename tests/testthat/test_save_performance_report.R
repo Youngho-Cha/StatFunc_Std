@@ -10,7 +10,7 @@ test_that("save_performance_report save csv file correctly",{
   tmp_dir=tempdir()
   test_filename="test_performance_report.csv"
 
-  filepath=save_performance_report(formatted,format="csv",outdir=tmp_dir,filename=test_filename)
+  filepath=save_performance_report(formatted,metrics,outdir=tmp_dir,filename=test_filename)
 
   expect_true(file.exists(filepath))
 
