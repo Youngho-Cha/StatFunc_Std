@@ -22,13 +22,13 @@ It also calculates **100(1−α)% confidence intervals** for each metric.
 Install the package directly from GitHub using:
 
 ```r
-devtools::install_github("Youngho-Cha/Biostat_R_Standards")
+devtools::install_github("jnpmedi/MTNG_Biostat_R",subdir="packages/IVD_metrics")
 ```
 
 or
 
 ```r
-remotes::install_github("Youngho-Cha/Biostat_R_Standards")
+remotes::install_github("jnpmedi/MTNG_Biostat_R",subdir="packages/IVD_metrics")
 ```
 
 ---
