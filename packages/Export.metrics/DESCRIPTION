@@ -1,0 +1,12 @@
+Package: Export.metrics
+Title: Export analysis results to Excel automatically
+Version: 0.0.1
+Authors@R: 
+    person("Youngho", "Cha", , "cswer123@naver.com", role = c("aut", "cre"))
+Description: Saves the data frame containing the analysis results to an Excel file
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Imports: 
+    openxlsx
