@@ -3,7 +3,7 @@
 #'
 #' @param time_event The time elapsed until an event occurs
 #' @param censored Whether censoring occurred(0:censored, 1:event)
-#' @param class Group separation criteria variable
+#' @param var_name Variable used to calculate the C-index
 #'
 #' @importFrom survival coxph
 #' @importFrom survcomp concordance.index

@@ -11,7 +11,7 @@ calc_c_index(time_event, censored, var_name)
 
 \item{censored}{Whether censoring occurred(0:censored, 1:event)}
 
-\item{class}{Group separation criteria variable}
+\item{var_name}{Variable used to calculate the C-index}
 }
 \value{
 Variable-specific C-index for the event and 95\% confidence intervals

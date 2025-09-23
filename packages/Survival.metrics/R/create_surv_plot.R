@@ -1,11 +1,13 @@
 
 #' Create Kaplane-Meier survival plot
 #'
-#' @param time_event The time elapsed until an event occurs
-#' @param censored Whether censoring occurred(0:censored, 1:event)
-#' @param class Group separation criteria variable
+#' @param km_res Results of Kaplan-Meier method
+#' @param filepath The file location where the survival curve will be saved
+#' @param title The title of the survival curve
+#' @param x The name of the x-axis
+#' @param y The name of the y-axis
 #'
-#' @importFrom survival survfit
+#' @importFrom ggplot2 ggplot geom_step geom_ribbon labs theme_minimal ggsave
 #' @importFrom broom tidy
 #'
 #' @export

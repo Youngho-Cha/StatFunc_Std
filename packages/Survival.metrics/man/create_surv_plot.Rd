@@ -7,11 +7,15 @@
 create_surv_plot(km_res, filepath, title, x, y)
 }
 \arguments{
-\item{time_event}{The time elapsed until an event occurs}
+\item{km_res}{Results of Kaplan-Meier method}
 
-\item{censored}{Whether censoring occurred(0:censored, 1:event)}
+\item{filepath}{The file location where the survival curve will be saved}
 
-\item{class}{Group separation criteria variable}
+\item{title}{The title of the survival curve}
+
+\item{x}{The name of the x-axis}
+
+\item{y}{The name of the y-axis}
 }
 \description{
 Create Kaplane-Meier survival plot
