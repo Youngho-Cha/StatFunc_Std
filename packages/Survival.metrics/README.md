@@ -79,7 +79,7 @@ library(Survival.metrics)
 
 ### 🔹 1. `calc_surv_rate()`
 
-Calculates key performance metrics with their confidence intervals.
+Calculate the survival rate for the event and test difference in survival rates by group.
 
 **Usage:**
 ```r
@@ -91,14 +91,14 @@ calc_surv_rate(
 ```
 
 **Arguments:**
-* time_event:
-* time_follow:
-* censored:
-* class:
+* time_event: The time elapsed until an event occurs
+* time_follow: Follow-up period
+* censored: Whether censoring occurred(0:censored, 1:event)
+* class: Group separation criteria variable
 
 ### 🔹 2. `create_surv_plot()`
 
-Formats the numerical output of `calc_performance_metrics()` into an easy-to-read table.
+Create Kaplane-Meier survival plot.
 
 **Usage:**
 ```r
@@ -111,37 +111,84 @@ create_surv_plot(
 ```
 
 **Arguments:**
-* metrics: the output from the calc_performance_metrics() function containing the calculated performance metric values
+* km_res: Results of Kaplan-Meier method
+* filepath: The file location where the survival curve will be saved
+* title: The title of the survival curve
+* x: The name of the x-axis
+* y: The name of the y-axis
 
-### 🔹 3. `format_for_reporting()`
+### 🔹 3. `calc_freq_rate()`
 
-Rounds numerical output values to the specified number of decimal places.
+Calculate event frequency and rate per group.
 
 **Usage:**
 ```r
-format_for_reporting(df, digits=3)
+calc_freq_rate(
+  time_event,
+  time_vector,
+  censored,
+  class)
 ```
 
 **Argument:**
-* df: the data frame formatted using the format_performance_output() function
-* digits: number of decimal places (default = 3)
+* time_event: The time elapsed until an event occurs
+* time_vector: A predefined time interval
+* censored: Whether censoring occurred(0:censored, 1:event)
+* class: Group separation criteria variable
 
-### 🔹 4. `save_performance_report() / save_performance_report_docx()`
+### 🔹 4. `calc_hazard_ratio()`
 
-Saves the formatted output of `format_performance_metrics()` to a specified excel/ word file.
+Calculate the hazard ratio for the event by group.
 
 **Usage:**
 ```r
-save_performance_report(results_df, original_result, outdir = "results", filename = NULL)
-save_performance_report_docx(results_df, original_result, outdir = "results", filename = NULL)
+calc_hazard_ratio(
+  time_event,
+  censored,
+  class)
 ```
 
 **Arguments:**
-* results_df: the tabular data formatted using the format_for_reporting() function
-* original_result: the output from the calc_performance_metrics() function
-* outdir: name of the output directory where the file will be saved (default = "results")
-* filename: name of the output file (default = NULL)
-  
+* time_event: The time elapsed until an event occurs
+* censored: Whether censoring occurred(0:censored, 1:event)
+* class: Group separation criteria variable
+
+### 🔹 5. `calc_rmst()`
+
+Calculate RMST for the event by group.
+
+**Usage:**
+```r
+calc_rmst(
+  time_event,
+  time_follow,
+  censored,
+  class)
+```
+
+**Arguments:**
+* time_event: The time elapsed until an event occurs
+* time_follow: Follow-up period
+* censored: Whether censoring occurred(0:censored, 1:event)
+* class: Group separation criteria variable
+
+### 🔹 6. `calc_c_index()`
+
+Calculate C-index for the specific variables.
+
+**Usage:**
+```r
+calc_c_index(
+  time_event,
+  censored,
+  var_name)
+```
+
+**Arguments:**
+* time_event: The time elapsed until an event occurs
+* censored: Whether censoring occurred(0:censored, 1:event)
+* var_name: Variable used to calculate the C-index
+
 ---
 
 ## 📬 Contact
