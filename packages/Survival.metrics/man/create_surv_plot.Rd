@@ -4,7 +4,7 @@
 \alias{create_surv_plot}
 \title{Create Kaplane-Meier survival plot}
 \usage{
-create_surv_plot(km_res, filepath, title, x, y)
+create_surv_plot(km_res, filepath, title, x, y, legend_title, legend_labels)
 }
 \arguments{
 \item{km_res}{Results of Kaplan-Meier method}
@@ -16,6 +16,10 @@ create_surv_plot(km_res, filepath, title, x, y)
 \item{x}{The name of the x-axis}
 
 \item{y}{The name of the y-axis}
+
+\item{legend_title}{The title of the legend}
+
+\item{legend_labels}{The names of legend labels}
 }
 \description{
 Create Kaplane-Meier survival plot
