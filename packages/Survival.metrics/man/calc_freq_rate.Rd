@@ -21,3 +21,64 @@ Frequency and proportion of events by group and the overall results of the Kapla
 \description{
 Calculate event frequency and rate per group
 }
+\details{
+\strong{Fundamentals of Survival Data:}
+Survival analysis, also known as time-to-event analysis, deals with data
+where the outcome of interest is the time until an event occurs. This data
+has two key components:
+\itemize{
+\item \strong{Time:} The duration from a starting point to the event or the end of observation.
+\item \strong{Event Status:} A binary indicator of whether the event of interest occurred (e.g., 1 = event occurred, 0 = no event).
+}
+A crucial feature of survival data is \strong{censoring}. An observation is
+censored when we have partial information about its event time. For example,
+a study might end before a subject experiences the event, or a subject might
+withdraw. These censored observations are not discarded; they are used in the
+analysis up to the time they were last observed, which is a key strength of
+survival analysis methods.
+}
+\section{Statistical Methods}{
+
+\describe{
+\item{\strong{Kaplan-Meier (K-M) Method:}}{
+The Kaplan-Meier estimator is a non-parametric statistic used to estimate
+the survival function, S(t), from time-to-event data. Instead of a single
+formula, it is an iterative process calculated at each event time. The
+survival probability at any given time is the cumulative product of the
+conditional probabilities of surviving each preceding time interval. The
+estimation is performed as follows:
+\enumerate{
+\item Order the unique event times from smallest to largest (\eqn{t_1 < t_2 < ... < t_k}).
+\item For each event time \eqn{t_i}, calculate the conditional probability of surviving past that time, given survival up to that time.
+\item The overall survival probability at time \eqn{t} is the product of these conditional probabilities for all event times up to and including \eqn{t}.
+}
+This is mathematically expressed as:
+\deqn{S(t) = \prod_{i|t_i \le t} \frac{n_i - d_i}{n_i}}
+Where \eqn{n_i} is the number of subjects at risk (those still being followed who have not yet had the event) just prior to time \eqn{t_i}, and \eqn{d_i} is the number of events that occurred at time \eqn{t_i}.
+}
+\item{\strong{Log-Rank Test:}}{
+The log-rank test is a non-parametric hypothesis test for comparing the
+survival distributions of two or more groups.
+
+\strong{Hypotheses:}
+The null and alternative hypotheses are formulated as follows:
+\deqn{H_0: S_1(t) = S_2(t) = ... = S_k(t) \quad \text{for all } t}
+(The survival curves for all k groups are identical.)
+\deqn{H_A: \text{At least one } S_j(t) \text{ differs from the others.}}
+(At least one group has a different survival experience.)
+
+\strong{Test Statistic:}
+The test works by calculating the observed (O) and expected (E) number of
+events in each group at every event time, and then summing them to get an
+overall total for each group. The test statistic is constructed from these
+totals and follows a \strong{chi-squared (\eqn{\chi^2}) distribution} with
+k-1 degrees of freedom (where k is the number of groups).
+\deqn{\chi^2 = \sum_{j=1}^{k} \frac{(O_j - E_j)^2}{E_j}}
+Where \eqn{O_j} is the total observed events in group j, and \eqn{E_j} is
+the total expected events in group j, assuming the null hypothesis is true.
+A large value for the test statistic provides evidence against the null
+hypothesis.
+}
+}
+}
+

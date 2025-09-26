@@ -24,8 +24,72 @@ calc_binary_metrics(
 \item{alpha}{type I error}
 }
 \value{
-A named list of data frame which contains calculated performance metrics and 2X2 confusion matrix table
+A named list of data frame which contains calculated performance metrics and 2X2 confusion matrix
 }
 \description{
 Calculate binary performance metrics
 }
+\section{Binary Classification Metrics}{
+
+This function calculates sensitivity, specificity, positive predictive value (PPV), negative predictive value (NPV), and accuracy. These binary performance metrics are commonly used to evaluate the performance of a classification model for binary outcomes (e.g., 0 or 1). Each metric is calculated using the components of the 2x2 confusion matrix below: True Positives (TP), True Negatives (TN), False Positives (FP), and False Negatives (FN).
+
+\strong{Confusion Matrix}
+
+\tabular{lcc}{
+\strong{} \tab \strong{Predicted: Positive} \tab \strong{Predicted: Negative} \cr
+\strong{Actual: Positive} \tab TP (True Positive) \tab FN (False Negative) \cr
+\strong{Actual: Negative} \tab FP (False Positive) \tab TN (True Negative) \cr
+}
+
+\strong{Metric Formulas and Descriptions}
+\describe{
+\item{\strong{Sensitivity (True Positive Rate):}}{The proportion of actual positives that were correctly identified by the model.}
+\deqn{Sensitivity = \frac{TP}{TP+FN}}
+\item{\strong{Specificity (True Negative Rate):}}{The proportion of actual negatives that were correctly identified by the model.}
+\deqn{Specificity = \frac{TN}{TN + FP}}
+\item{\strong{Positive Predictive Value (PPV):}}{The proportion of true positives among all positive predictions made by the model.}
+\deqn{PPV = \frac{TP}{TP + FP}}
+\item{\strong{Negative Predictive Value (NPV):}}{The proportion of true negatives among all negative predictions made by the model.}
+\deqn{NPV = \frac{TN}{TN + FN}}
+\item{\strong{Accuracy:}}{The proportion of correct predictions (both true positives and true negatives) among the total number of cases.}
+\deqn{Accuracy = \frac{TP + TN}{TP + TN + FP + FN}}
+}
+}
+
+\section{Confidence Interval Calculation}{
+
+While there are numerous methods to calculate confidence intervals for binary classification metrics, this function implements three widely used approaches: the Clopper-Pearson (exact) method, the Wilson (score) method, and the Wald method.
+
+\describe{
+\item{\strong{1. Clopper-Pearson (Exact) Interval:}}{
+This method is based on inverting the equal-tailed binomial test. It is called an 'exact' method because it guarantees that the confidence level is at least the nominal level (e.g., 95\%). The interval is derived from the Beta distribution.
+\deqn{(Lower, Upper) = \left( B\left(\frac{\alpha}{2}; x, n-x+1\right), B\left(1-\frac{\alpha}{2}; x+1, n-x\right) \right)}
+Where \eqn{x} is the number of successes, \eqn{n} is the total number of trials, and \eqn{B} is the quantile function of the Beta distribution.
+\itemize{
+\item \strong{Pros:} Guarantees nominal coverage. The interval is always within (0, 1).
+\item \strong{Cons:} It is often overly conservative, resulting in wider intervals than necessary.
+\item \strong{Use When:} You need a highly reliable, guaranteed-coverage interval, especially with small sample sizes.
+}}
+
+\item{\strong{2. Wilson (Score) Interval:}}{
+The Wilson score interval is derived from inverting the score test and does not rely on the assumption of a normal approximation for the sample proportion itself. It has better performance, especially for small sample sizes or for proportions near 0 or 1.
+\deqn{(Lower, Upper) = \frac{1}{1 + \frac{z^2}{n}} \left( \hat{p} + \frac{z^2}{2n} \pm z\sqrt{\frac{\hat{p}(1-\hat{p})}{n} + \frac{z^2}{4n^2}} \right)}
+Where \eqn{\hat{p}} is the sample proportion (\eqn{x/n}) and \eqn{z} is the standard normal quantile for \eqn{1-\alpha/2}.
+\itemize{
+\item \strong{Pros:} Excellent performance even for small \eqn{n} and extreme proportions. Symmetric in terms of error rates.
+\item \strong{Cons:} The formula is more complex to compute manually.
+\item \strong{Use When:} It is often recommended as the go-to choice for its balance of accuracy and reliability across various conditions.
+}}
+
+\item{\strong{3. Wald Interval:}}{
+This is the simplest and most commonly taught method, based on the normal approximation to the binomial distribution.
+\deqn{(Lower, Upper) = \hat{p} \pm z \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}}
+Where \eqn{\hat{p}} is the sample proportion (\eqn{x/n}) and \eqn{z} is the standard normal quantile for \eqn{1-\alpha/2}.
+\itemize{
+\item \strong{Pros:} Very easy to understand and calculate.
+\item \strong{Cons:} Performs poorly with small sample sizes and when the proportion \eqn{\hat{p}} is close to 0 or 1. The interval can sometimes extend beyond (0, 1).
+\item \strong{Use When:} You have a large sample size and the proportion is not near the boundaries of 0 or 1. Due to its poor performance in other cases, it is often not recommended for general use.
+}}
+}
+}
+

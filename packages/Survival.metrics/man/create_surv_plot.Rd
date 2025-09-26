@@ -24,3 +24,55 @@ create_surv_plot(km_res, filepath, title, x, y, legend_title, legend_labels)
 \description{
 Create Kaplane-Meier survival plot
 }
+\details{
+\strong{Fundamentals of Survival Data:}
+Survival analysis, also known as time-to-event analysis, deals with data
+where the outcome of interest is the time until an event occurs. This data
+has two key components:
+\itemize{
+\item \strong{Time:} The duration from a starting point to the event or the end of observation.
+\item \strong{Event Status:} A binary indicator of whether the event of interest occurred (e.g., 1 = event occurred, 0 = no event).
+}
+A crucial feature of survival data is \strong{censoring}. An observation is
+censored when we have partial information about its event time. For example,
+a study might end before a subject experiences the event, or a subject might
+withdraw. These censored observations are not discarded; they are used in the
+analysis up to the time they were last observed, which is a key strength of
+survival analysis methods.
+}
+\section{Statistical Method}{
+
+\describe{
+\item{\strong{Kaplan-Meier (K-M) Method:}}{
+The Kaplan-Meier estimator is a non-parametric statistic used to estimate
+the survival function, S(t), from time-to-event data. Instead of a single
+formula, it is an iterative process calculated at each event time. The
+survival probability at any given time is the cumulative product of the
+conditional probabilities of surviving each preceding time interval.
+}
+
+\describe{
+\item{\strong{Kaplan-Meier (K-M) Curve Visualization:}}{
+The Kaplan-Meier survival curve is the graphical representation of the K-M
+estimate of the survival function, S(t). This function visualizes how the
+estimated survival probability changes over time.
+
+The curve is plotted as a \strong{step function}, where the y-axis represents the
+survival probability and the x-axis represents time. The key features of
+the plot are:
+\itemize{
+\item A horizontal line indicates a period where no events occurred.
+\item A vertical drop in the curve occurs at each time an event is observed.
+The height of the drop reflects the decrease in survival probability at that moment.
+\item Small vertical ticks or crosses on the curve often represent
+\strong{censored observations}, showing the time at which those subjects
+were last known to be event-free.
+}
+By visualizing the K-M estimate, one can intuitively compare the survival
+experience between different groups, identifying which group has a better
+or worse prognosis over the follow-up period.
+}
+}
+}
+}
+
