@@ -70,10 +70,64 @@ This command will automatically use the GITHUB_PAT environment variable for auth
 ---
 
 ## 💡 Example Usage
-추후 example data 추가 등, 예제 코드 작성을 위한 요소들이 준비되면 해당 부분 작성 예정
 
+* `calc_binary_metrics` 
 ```r
 library(IVD.metrics)
+
+data(ex_data)
+
+## Select metrics to calculate
+Ground_Truth=ex_data$gt
+Predicted=ex_data$pred
+
+res_metrics=calc_binary_metrics(actual=Ground_Truth,
+                                predicted=Predicted,
+                                metrics_to_calc=c("sensitivity","ppv","accuracy"))
+
+res_metrics_sensitivity=res_metrics$sensitivity
+res_metrics_ppv=res_metrics$ppv
+res_metrics_accuracy=res_metrics$accuracy
+
+## Select method for calculating confidence interval
+Ground_Truth=ex_data$gt
+Predicted=ex_data$pred
+
+res_ci=calc_binary_metrics(actual=Ground_Truth,
+                           predicted=Predicted,
+                           metrics_to_calc=c("specificity","npv","accuracy"),
+                           ci_method="wald")
+
+res_ci_specificity=res_ci$specificity
+res_ci_npv=res_ci$npv
+res_ci_accuracy=res_ci$accuracy
+```
+
+* `calc_auc`
+```r
+library(IVD.metrics)
+
+data(ex_data)
+
+## Use default method for calculating confidence interval
+Ground_Truth=ex_data$gt
+Score=ex_data$score
+
+res_default=calc_auc(actual=Ground_Truth,
+                     score=Score)
+
+res_default_auc=res_default$auc
+
+## Use Bootstrap method for calculating confidence interval
+Ground_Truth=ex_data$gt
+Score=ex_data$score
+
+res_bootstrap=calc_auc(actual=Ground_Truth,
+                       score=Score,
+                       ci_method="bootstrap",
+                       boot_n=1000)
+
+res_bootstrap_auc=res_bootstrap$auc
 ```
 
 ---
@@ -109,7 +163,6 @@ Calculate AUC(Area Under Curve) with its confidence intervals.
 ```r
 calc_auc(
   actual,
-  predicted,
   score,
   ci_method_auc="delong",
   alpha=0.05,
@@ -118,7 +171,6 @@ calc_auc(
 
 **Arguments:**
 * actual: the true class label of each observation
-* predicted: the predicted class label
 * score: the prediction score
 * ci_method_auc: method for CI of AUC (e.g., delong, bootstrap) (default = delong)
 * alpha: significance level (default = 0.05)
