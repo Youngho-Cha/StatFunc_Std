@@ -164,7 +164,7 @@ Calculate AUC(Area Under Curve) with its confidence intervals.
 calc_auc(
   actual,
   score,
-  ci_method_auc="delong",
+  ci_method="delong",
   alpha=0.05,
   boot_n=2000)
 ```
@@ -172,7 +172,7 @@ calc_auc(
 **Arguments:**
 * actual: the true class label of each observation
 * score: the prediction score
-* ci_method_auc: method for CI of AUC (e.g., delong, bootstrap) (default = delong)
+* ci_method: method for CI of AUC (e.g., delong, bootstrap) (default = delong)
 * alpha: significance level (default = 0.05)
 * boot_n: number of iteration for bootstrap sampling (default = 2000)
 
