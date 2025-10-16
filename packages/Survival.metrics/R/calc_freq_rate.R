@@ -70,6 +70,23 @@
 #' }
 #'
 #' @export
+#'
+#' @examples
+#' # Example Use
+#' ## Calculate event frequency and rate at "1,3,5,7,10(year)" for each "age_class" group
+#'
+#' time_event=data$time_event
+#' time_vector=c(1,3,5,7,10)
+#' censored=data$censored
+#' class=data$age_class
+#'
+#' res=calc_freq_rate(time_event=time_event,
+#'                    time_vector=time_vector,
+#'                    censored=censored,
+#'                    class=class)
+#'
+#' res_age_group0=res$class0
+#' res_age_group1=res$class1
 calc_freq_rate=function(time_event,
                         time_vector,
                         censored,

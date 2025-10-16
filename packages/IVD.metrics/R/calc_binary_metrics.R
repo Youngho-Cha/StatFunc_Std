@@ -2,9 +2,9 @@
 #'Calculate binary performance metrics
 #'
 #' @param actual Vectors of actual values(0=negative, 1=positive)
-#' @param predicted Vector of predicted binary labels
+#' @param predicted Vector of predicted binary labels(0=negative, 1=positive)
 #' @param metrics_to_calc Character vector of metrics to calculate
-#' @param ci_method Select method to calculate CI
+#' @param ci_method Select method to calculate CI(Clopper-pearson, Wald, Wilson)
 #' @param alpha type I error
 #'
 #' @importFrom epiR epi.tests
@@ -71,11 +71,46 @@
 #'   }}
 #' }
 #' @export
+#'
+#' @examples
+#' # Example Use
+#' ## Select metrics to calculate
+#' Ground_Truth=ex_data$gt
+#' Predicted=ex_data$pred
+#'
+#' res_metrics=calc_binary_metrics(actual=Ground_Truth,
+#'                                 predicted=Predicted,
+#'                                 metrics_to_calc=c("sensitivity","ppv","accuracy"))
+#'
+#' res_metrics_sensitivity=res_metrics$sensitivity
+#' res_metrics_ppv=res_metrics$ppv
+#' res_metrics_accuracy=res_metrics$accuracy
+#'
+#' ## Select method for calculating confidence interval
+#' Ground_Truth=ex_data$gt
+#' Predicted=ex_data$pred
+#'
+#' res_ci=calc_binary_metrics(actual=Ground_Truth,
+#'                            predicted=Predicted,
+#'                            metrics_to_calc=c("specificity","npv","accuracy"),
+#'                            ci_method="wald")
+#'
+#' res_ci_specificity=res_ci$specificity
+#' res_ci_npv=res_ci$npv
+#' res_ci_accuracy=res_ci$accuracy
 calc_binary_metrics=function(actual,predicted,
                              metrics_to_calc=c("sensitivity","specificity",
                                                "ppv","npv","accuracy"),
                              ci_method="cp",
                              alpha=0.05){
+
+  valid_actual=all(actual %in% c(0,1))
+  valid_predicted=all(predicted %in% c(0,1))
+
+  if(!valid_actual||!valid_predicted){
+    stop("Input vectors 'actual' and 'predicted' must only contain 0 and 1.", call. = FALSE)
+  }
+
   result=list()
 
   tab=table(factor(predicted,levels=c(1,0)),
@@ -92,7 +127,7 @@ calc_binary_metrics=function(actual,predicted,
   result$confusion_matrix=cf
 
   if(ci_method=="cp"){
-    epi_result=epiR::epi.tests(tab,conf.level=0.95)
+    epi_result=epiR::epi.tests(tab,conf.level=1-alpha)
     epi_result=summary(epi_result)
 
     if("sensitivity" %in% metrics_to_calc)
@@ -118,7 +153,7 @@ calc_binary_metrics=function(actual,predicted,
   }
 
   if(ci_method=="wilson"){
-    epi_result=epiR::epi.tests(tab,conf.level=0.95)
+    epi_result=epiR::epi.tests(tab,conf.level=1-alpha)
     epi_tp=as.numeric(epi_result$tab[1,1])
     epi_fp=as.numeric(epi_result$tab[1,2])
     epi_fn=as.numeric(epi_result$tab[2,1])
@@ -169,7 +204,7 @@ calc_binary_metrics=function(actual,predicted,
   }
 
   if(ci_method=="wald"){
-    epi_result=epiR::epi.tests(tab,conf.level=0.95)
+    epi_result=epiR::epi.tests(tab,conf.level=1-alpha)
     epi_tp=as.numeric(epi_result$tab[1,1])
     epi_fp=as.numeric(epi_result$tab[1,2])
     epi_fn=as.numeric(epi_result$tab[2,1])

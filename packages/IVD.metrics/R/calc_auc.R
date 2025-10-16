@@ -2,9 +2,8 @@
 #'Calculate diagnostic performance metrics
 #'
 #' @param actual Vectors of actual values(0=negative, 1=positive)
-#' @param predicted Vector of predicted binary labels
-#' @param score Optional probability scores for AUC
-#' @param ci_method Select method to calculate CI for AUC
+#' @param score Probability scores for AUC
+#' @param ci_method Select method to calculate CI for AUC(DeLong, Bootstrap)
 #' @param alpha type I error
 #' @param boot_n The number of Bootstrap sampling
 #'
@@ -42,19 +41,60 @@
 #'   \item \strong{AUC < 0.5:} Represents a model that performs worse than random chance. This often implies that the model's predictions are inverted.
 #' }
 #' @export
-calc_auc=function(actual,predicted,score=NULL,
-                  ci_method_auc="delong",
+#'
+#' @examples
+#' # Example Use
+#' ## Use default method for calculating confidence interval
+#' Ground_Truth=ex_data$gt
+#' Score=ex_data$score
+#'
+#' res_default=calc_auc(actual=Ground_Truth,
+#'                      score=Score)
+#'
+#' res_default_auc=res_default$auc
+#'
+#' ## Use Bootstrap method for calculating confidence interval
+#' Ground_Truth=ex_data$gt
+#' Score=ex_data$score
+#'
+#' res_bootstrap=calc_auc(actual=Ground_Truth,
+#'                        score=Score,
+#'                        ci_method="bootstrap",
+#'                        boot_n=1000)
+#'
+#' res_bootstrap_auc=res_bootstrap$auc
+calc_auc=function(actual,score,
+                  ci_method="delong",
                   alpha=0.05,
                   boot_n=2000){
+
+  if (missing(actual)){
+    stop("argument \"actual\" is missing, with no default",call.=FALSE)
+  }
+  if (missing(score)){
+    stop("argument \"score\" is missing, with no default",call.=FALSE)
+  }
+
+  supported_methods=c("delong","bootstrap")
+  if (!(ci_method %in% supported_methods)) {
+    stop(paste0("Unsupported ci_method: '",ci_method,"'. Must be one of 'delong', 'bootstrap'."),call.=FALSE)
+  }
+
+  valid_actual=all(actual %in% c(0,1))
+
+  if(!valid_actual){
+    stop("Input vectors 'actual' must only contain 0 and 1.", call. = FALSE)
+  }
+
   result=list()
 
-  if(ci_method_auc=="delong") auc_result=pROC::roc(actual,score,ci=T)
-  if(ci_method_auc=="bootstrap") auc_result=pROC::roc(actual,score,ci=T,ci.method="bootstrap",boot.n=boot_n)
+  if(ci_method=="delong") auc_result=pROC::roc(actual,score,ci=T)
+  if(ci_method=="bootstrap") auc_result=pROC::roc(actual,score,ci=T,ci.method="bootstrap",boot.n=boot_n)
 
   auc_value=as.numeric(pROC::auc(auc_result))
 
-  if(ci_method_auc=="delong") auc_ci=pROC::ci.auc(auc_result)
-  if(ci_method_auc=="bootstrap") auc_ci=pROC::ci.auc(auc_result,method="bootstrap",boot.n=boot_n)
+  if(ci_method=="delong") auc_ci=pROC::ci.auc(auc_result)
+  if(ci_method=="bootstrap") auc_ci=pROC::ci.auc(auc_result,method="bootstrap",boot.n=boot_n)
 
   result$auc=data.frame(value=auc_value,lower=as.numeric(auc_ci[1]),upper=as.numeric(auc_ci[3]))
   result$roc_res=auc_result

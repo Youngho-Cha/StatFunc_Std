@@ -15,11 +15,11 @@ calc_binary_metrics(
 \arguments{
 \item{actual}{Vectors of actual values(0=negative, 1=positive)}
 
-\item{predicted}{Vector of predicted binary labels}
+\item{predicted}{Vector of predicted binary labels(0=negative, 1=positive)}
 
 \item{metrics_to_calc}{Character vector of metrics to calculate}
 
-\item{ci_method}{Select method to calculate CI}
+\item{ci_method}{Select method to calculate CI(Clopper-pearson, Wald, Wilson)}
 
 \item{alpha}{type I error}
 }
@@ -93,3 +93,30 @@ Where \eqn{\hat{p}} is the sample proportion (\eqn{x/n}) and \eqn{z} is the stan
 }
 }
 
+\examples{
+# Example Use
+## Select metrics to calculate
+Ground_Truth=ex_data$gt
+Predicted=ex_data$pred
+
+res_metrics=calc_binary_metrics(actual=Ground_Truth,
+                                predicted=Predicted,
+                                metrics_to_calc=c("sensitivity","ppv","accuracy"))
+
+res_metrics_sensitivity=res_metrics$sensitivity
+res_metrics_ppv=res_metrics$ppv
+res_metrics_accuracy=res_metrics$accuracy
+
+## Select method for calculating confidence interval
+Ground_Truth=ex_data$gt
+Predicted=ex_data$pred
+
+res_ci=calc_binary_metrics(actual=Ground_Truth,
+                           predicted=Predicted,
+                           metrics_to_calc=c("specificity","npv","accuracy"),
+                           ci_method="wald")
+
+res_ci_specificity=res_ci$specificity
+res_ci_npv=res_ci$npv
+res_ci_accuracy=res_ci$accuracy
+}

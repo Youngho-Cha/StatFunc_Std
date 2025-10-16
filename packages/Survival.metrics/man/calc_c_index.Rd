@@ -91,3 +91,13 @@ pairs to the total number of informative pairs.
 }
 }
 
+\examples{
+# Example Use
+## Calculate c-index for "age" variable
+time_event=data$time_event
+censored=data$censored
+
+res=calc_c_index(time_event=time,
+                 censored=censored,
+                 var_name="age")
+}

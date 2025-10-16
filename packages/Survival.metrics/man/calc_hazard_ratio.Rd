@@ -80,3 +80,14 @@ For a continuous variable, \eqn{\exp(\beta)} represents the change in hazard for
 }}
 }
 
+\examples{
+# Example Use
+## Calculate Hazard Ratio for the "age_class" group
+time_event=data$time_event
+censored=data$censored
+class=data$age_class
+
+res=calc_hazard_ratio(time_event=time_event,
+                      censored=censored,
+                      class=class)
+}

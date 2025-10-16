@@ -64,6 +64,21 @@
 #'}
 #'
 #' @export
+#'
+#' @examples
+#' # Example Use
+#' ## Create surv plot for each "age_class" group
+#' res=calc_surv_rate(...)
+#' km_res=res$km
+#' legend_labels=c("age0 group","age1 group")
+#'
+#' create_surv_plot(km_res=km_res,
+#'                  filepath="C:/R/...",
+#'                  title="plot title..",
+#'                  x="x-axis label...",
+#'                  y="y-axis label...",
+#'                  legend_title="legend description...",
+#'                  legend_labels=legend_labels)
 create_surv_plot=function(km_res,filepath,title,x,y,legend_title,legend_labels){
   fit_df=tidy(km_res)
   start_points=data.frame(

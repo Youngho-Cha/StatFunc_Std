@@ -4,27 +4,18 @@
 \alias{calc_auc}
 \title{Calculate diagnostic performance metrics}
 \usage{
-calc_auc(
-  actual,
-  predicted,
-  score = NULL,
-  ci_method_auc = "delong",
-  alpha = 0.05,
-  boot_n = 2000
-)
+calc_auc(actual, score, ci_method = "delong", alpha = 0.05, boot_n = 2000)
 }
 \arguments{
 \item{actual}{Vectors of actual values(0=negative, 1=positive)}
 
-\item{predicted}{Vector of predicted binary labels}
+\item{score}{Probability scores for AUC}
 
-\item{score}{Optional probability scores for AUC}
+\item{ci_method}{Select method to calculate CI for AUC(DeLong, Bootstrap)}
 
 \item{alpha}{type I error}
 
 \item{boot_n}{The number of Bootstrap sampling}
-
-\item{ci_method}{Select method to calculate CI for AUC}
 }
 \value{
 Data frame which contains calculated auc and result of pROC::roc
@@ -39,8 +30,6 @@ The Area Under the Receiver Operating Characteristic Curve (AUC-ROC) is a fundam
 An AUC value represents the model's overall ability to correctly distinguish between the positive and negative classes. It can be interpreted as \strong{the probability that the model will rank a randomly chosen positive instance higher than a randomly chosen negative instance}. A key advantage of AUC is that it is independent of the chosen classification threshold.
 
 \strong{The ROC Curve}
-
-\figure{figure/roc_curve.png}{options: alt="An example of an ROC Curve showing the trade-off between TPR and FPR."}
 
 An ROC curve is a graphical plot that illustrates the diagnostic ability of a binary classifier as its discrimination threshold is varied. It is created by plotting the \strong{True Positive Rate (Sensitivity)} against the \strong{False Positive Rate (1 - Specificity)}.
 
@@ -64,3 +53,25 @@ The AUC is the two-dimensional area underneath the entire ROC curve. Numerically
 }
 }
 
+\examples{
+# Example Use
+## Use default method for calculating confidence interval
+Ground_Truth=ex_data$gt
+Score=ex_data$score
+
+res_default=calc_auc(actual=Ground_Truth,
+                     score=Score)
+
+res_default_auc=res_default$auc
+
+## Use Bootstrap method for calculating confidence interval
+Ground_Truth=ex_data$gt
+Score=ex_data$score
+
+res_bootstrap=calc_auc(actual=Ground_Truth,
+                       score=Score,
+                       ci_method="bootstrap",
+                       boot_n=1000)
+
+res_bootstrap_auc=res_bootstrap$auc
+}

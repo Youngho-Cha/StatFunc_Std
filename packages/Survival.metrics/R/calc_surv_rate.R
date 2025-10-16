@@ -70,6 +70,23 @@
 #' }
 #'
 #' @export
+#'
+#' @examples
+#' # Example Use
+#' ## Calculate survival rate for each "age_class" group when the follow-up period is 10(years)
+#' time_event=data$time_event
+#' time_follow=10
+#' censored=data$censored
+#' class=data$age_class
+#'
+#' res=calc_surv_rate(time_event=time_event,
+#'                    time_follow=time_follow,
+#'                    censored=censored,
+#'                    class=class)
+#'
+#' res_age_group0=res$class0
+#' res_age_group1=res$class1
+#' res_age_pvalue=res$p
 calc_surv_rate=function(time_event,
                         time_follow,
                         censored,

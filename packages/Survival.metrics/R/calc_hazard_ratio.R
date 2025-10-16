@@ -70,6 +70,17 @@
 #'
 #'
 #' @export
+#'
+#' @examples
+#' # Example Use
+#' ## Calculate Hazard Ratio for the "age_class" group
+#' time_event=data$time_event
+#' censored=data$censored
+#' class=data$age_class
+#'
+#' res=calc_hazard_ratio(time_event=time_event,
+#'                       censored=censored,
+#'                       class=class)
 calc_hazard_ratio=function(time_event,
                            censored,
                            class){

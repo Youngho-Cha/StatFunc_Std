@@ -76,3 +76,18 @@ or worse prognosis over the follow-up period.
 }
 }
 
+\examples{
+# Example Use
+## Create surv plot for each "age_class" group
+res=calc_surv_rate(...)
+km_res=res$km
+legend_labels=c("age0 group","age1 group")
+
+create_surv_plot(km_res=km_res,
+                 filepath="C:/R/...",
+                 title="plot title..",
+                 x="x-axis label...",
+                 y="y-axis label...",
+                 legend_title="legend description...",
+                 legend_labels=legend_labels)
+}
