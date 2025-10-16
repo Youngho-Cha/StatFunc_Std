@@ -1,0 +1,123 @@
+[33m1fdc790[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev-branch[m[33m, [m[1;31morigin/dev-branch[m[33m)[m Add roxygen description to each packages
+[33mfe5a97d[m Change: {Survival.metrics
+[33m8f30386[m Change: {Survival.metrics} create_surv_plot
+[33m078298d[m Change:Survival.metrics
+[33m4b4ec4a[m mono-repository
+[33m40f249a[m 패키지 구조 subdirectory 형태로 변경
+[33md704270[m Merge pull request #1 from jnpmedi/Youngho-Cha-patch-1
+[33m22c9432[m[33m ([m[1;31morigin/Youngho-Cha-patch-1[m[33m)[m Update README.md
+[33mf635d5b[m Create R
+[33m919816e[m Rename packages/submission.package.Rproj to packages/IVD_metrics/submission.package.Rproj
+[33ma84c65e[m Rename packages/renv.lock to packages/IVD_metrics/renv.lock
+[33m87ff9f6[m Rename packages/README.md to packages/IVD_metrics/README.md
+[33m2da33af[m Delete packages/report/results directory
+[33m8cd2fb1[m Delete packages/IVD_metrics/sdf
+[33me39948c[m Rename packages/NAMESPACE to packages/IVD_metrics/NAMESPACE
+[33maf6c861[m Rename packages/LICENSE.md to packages/IVD_metrics/LICENSE.md
+[33m276b80c[m Rename packages/LICENSE to packages/IVD_metrics/LICENSE
+[33m48791ec[m Rename packages/DESCRIPTION to packages/IVD_metrics/DESCRIPTION
+[33m4a8a0ad[m Rename packages/.gitignore to packages/IVD_metrics/.gitignore
+[33mbdf9dd1[m Rename packages/.Rprofile to packages/IVD_metrics/.Rprofile
+[33m218d252[m Rename packages/.Rhistory to packages/IVD_metrics/.Rhistory
+[33m9c5d000[m Rename packages/.Rbuildignore to packages/IVD_metrics/.Rbuildignore
+[33m7f8828a[m Rename packages/vignettes/submission-workflow.Rmd to packages/IVD_metrics/vignettes/submission-workflow.Rmd
+[33m0ca7edc[m Rename packages/vignettes/.gitignore to packages/IVD_metrics/vignettes/.gitignore
+[33m056ab31[m Rename packages/tests/testthat/test_save_performance_report_docx.R to packages/IVD_metrics/tests/testthat/test_save_performance_report_docx.R
+[33m20e350c[m Rename packages/tests/testthat/test_save_performance_report.R to packages/IVD_metrics/tests/testthat/test_save_performance_report.R
+[33m49be1f2[m Rename packages/tests/testthat/test_generate_test_data.R to packages/IVD_metrics/tests/testthat/test_generate_test_data.R
+[33m70c8734[m Rename packages/tests/testthat/test_format_performance_output.R to packages/IVD_metrics/tests/testthat/test_format_performance_output.R
+[33m2ef20a2[m Rename packages/tests/testthat/test_calc_performance_metrics.R to packages/IVD_metrics/tests/testthat/test_calc_performance_metrics.R
+[33m304be7b[m Rename packages/report/submission_report.html to packages/IVD_metrics/report/submission_report.html
+[33md4da824[m Rename submission_report.Rmd to submission_report.Rmd
+[33mcfdb63e[m Rename packages/report/submission_report.Rmd to packages/IVD_metrics/results/submission_report.Rmd
+[33mcb823e6[m Rename packages/renv/settings.json to packages/IVD_metrics/renv/settings.json
+[33m1869f50[m Rename packages/renv/activate.R to packages/IVD_metrics/renv/activate.R
+[33m73b6bf5[m Rename packages/renv/.gitignore to packages/IVD_metrics/renv/.gitignore
+[33m2cb40f0[m Rename save_performance_report_docx.Rd to save_performance_report_docx.Rd
+[33m3de7715[m Rename packages/man/save_performance_report_docx.Rd to packages/IVD_metircs/man/save_performance_report_docx.Rd
+[33me28b682[m Rename packages/man/save_performance_report.Rd to packages/IVD_metrics/man/save_performance_report.Rd
+[33m0e62296[m Rename packages/man/format_performance_output.Rd to packages/IVD_metrics/man/format_performance_output.Rd
+[33m2c894e3[m Rename packages/man/format_for_reporting.Rd to packages/IVD_metrics/man/format_for_reporting.Rd
+[33mdf31784[m Rename packages/man/example_data.Rd to packages/IVD_metrics/man/example_data.Rd
+[33md37aead[m Rename packages/man/calculate_wilson_ci.Rd to packages/IVD_metrics/man/calculate_wilson_ci.Rd
+[33m1f0152c[m Rename packages/man/calculate_wald_ci.Rd to packages/IVD_metrics/man/calculate_wald_ci.Rd
+[33m1cba57d[m Rename packages/man/calc_performance_metrics.Rd to packages/IVD_metrics/man/calc_performance_metrics.Rd
+[33m1914262[m Rename packages/data/example_data.rda to packages/IVD_metrics/data/example_data.rda
+[33m7e9bf82[m Rename packages/data-raw/generate_test_data.R to packages/IVD_metrics/data-raw/generate_test_data.R
+[33m2b7887d[m Rename packages/R/metrics_save_docx.R to packages/IVD_metrics/R/metrics_save_docx.R
+[33mb13138d[m Rename packages/R/metrics_save.R to packages/IVD_metrics/R/metrics_save.R
+[33m8b711e5[m Rename packages/R/metrics_format.R to packages/IVD_metrics/R/metrics_format.R
+[33m6663201[m Rename packages/R/metrics_digits.R to packages/IVD_metrics/R/metrics_digits.R
+[33me50d829[m Rename packages/R/metrics_calc.R to packages/IVD_metrics/R/metrics_calc.R
+[33med4fc77[m Rename packages/R/helpers.R to packages/IVD_metrics/R/helpers.R
+[33m9097783[m Rename packages/R/global_variables.R to packages/IVD_metrics/R/global_variables.R
+[33m823ad78[m Rename packages/R/example_data.R to packages/IVD_metrics/R/example_data.R
+[33m0b52c12[m Create sdf
+[33mcc8d85c[m Rename README.md to packages/README.md
+[33mea9aca7[m Rename submission.package.Rproj to packages/submission.package.Rproj
+[33mdba1e1a[m Rename renv.lock to packages/renv.lock
+[33m8ea7829[m Rename NAMESPACE to packages/NAMESPACE
+[33mcc553e5[m Rename LICENSE.md to packages/LICENSE.md
+[33mddd6135[m Rename LICENSE to packages/LICENSE
+[33m3c8f3ba[m Rename DESCRIPTION to packages/DESCRIPTION
+[33ma015d90[m Rename .gitignore to packages/.gitignore
+[33m4288ab8[m Rename .Rprofile to packages/.Rprofile
+[33m6ccfd43[m Rename .Rhistory to packages/.Rhistory
+[33mfd0f641[m Rename .Rbuildignore to packages/.Rbuildignore
+[33md8baba7[m Rename vignettes/submission-workflow.Rmd to packages/vignettes/submission-workflow.Rmd
+[33m7d31ff5[m Rename vignettes/.gitignore to packages/vignettes/.gitignore
+[33mb258cb6[m Rename tests/testthat/test_save_performance_report_docx.R to packages/tests/testthat/test_save_performance_report_docx.R
+[33mde83c70[m Rename tests/testthat/test_save_performance_report.R to packages/tests/testthat/test_save_performance_report.R
+[33m68bfa6d[m Rename tests/testthat/test_generate_test_data.R to packages/tests/testthat/test_generate_test_data.R
+[33m2b0a168[m Rename tests/testthat/test_format_performance_output.R to packages/tests/testthat/test_format_performance_output.R
+[33mdc28005[m Rename test_calc_performance_metrics.R to test_calc_performance_metrics.R
+[33ma6df2e1[m Rename tests/testthat/test_calc_performance_metrics.R to packages/test/testthat/test_calc_performance_metrics.R
+[33m7c278fb[m Rename report/results/roc_20250716_1505.png to packages/report/results/roc_20250716_1505.png
+[33mc0a29d9[m Rename report/results/roc_20250710_1013.png to packages/report/results/roc_20250710_1013.png
+[33mf1185b0[m Rename report/results/performance_20250716_1505.xlsx to packages/report/results/performance_20250716_1505.xlsx
+[33mb208c32[m Rename report/results/performance_20250710_1013.xlsx to packages/report/results/performance_20250710_1013.xlsx
+[33m7eaf6fe[m Rename report/results/performance_20250702_1413.csv to packages/report/results/performance_20250702_1413.csv
+[33mfbf05da[m Rename report/results/performance_20250618_1710.csv to packages/report/results/performance_20250618_1710.csv
+[33m9640882[m Rename report/results/performance_20250618_1709.csv to packages/report/results/performance_20250618_1709.csv
+[33m47ef37d[m Rename performance_20250618_1150.csv to performance_20250618_1150.csv
+[33m64a3992[m Rename report/results/performance_20250618_1150.csv to packages/report/result/performance_20250618_1150.csv
+[33m3c297d8[m Rename report/results/performance_20250618_1124.csv to packages/report/results/performance_20250618_1124.csv
+[33m8c6f655[m Rename report/submission_report.html to packages/report/submission_report.html
+[33mac91c1d[m Rename report/submission_report.Rmd to packages/report/submission_report.Rmd
+[33m6f2f31a[m Rename renv/settings.json to packages/renv/settings.json
+[33mf955fbc[m Rename renv/activate.R to packages/renv/activate.R
+[33m11a5276[m Rename packages/.gitignore to packages/renv/.gitignore
+[33m3d2e424[m Rename .gitignore to .gitignore
+[33m040b368[m Rename man/save_performance_report_docx.Rd to packages/man/save_performance_report_docx.Rd
+[33m30d4e2b[m Rename man/save_performance_report.Rd to packages/man/save_performance_report.Rd
+[33m487a490[m Rename man/format_performance_output.Rd to packages/man/format_performance_output.Rd
+[33mce7aa26[m Rename man/format_for_reporting.Rd to packages/man/format_for_reporting.Rd
+[33m18c3c27[m Rename man/example_data.Rd to packages/man/example_data.Rd
+[33m49bca9e[m Rename man/calculate_wilson_ci.Rd to packages/man/calculate_wilson_ci.Rd
+[33m266dbd7[m Rename man/calculate_wald_ci.Rd to packages/man/calculate_wald_ci.Rd
+[33m76f2a2c[m Rename man/calc_performance_metrics.Rd to packages/man/calc_performance_metrics.Rd
+[33me8efc2b[m Rename data/example_data.rda to packages/data/example_data.rda
+[33md507724[m Rename data-raw/generate_test_data.R to packages/data-raw/generate_test_data.R
+[33m83ca765[m Rename R/metrics_save_docx.R to packages/R/metrics_save_docx.R
+[33m171d38d[m Rename R/metrics_save.R to packages/R/metrics_save.R
+[33m6aae370[m Rename R/metrics_format.R to packages/R/metrics_format.R
+[33m21ddf11[m Rename R/metrics_digits.R to packages/R/metrics_digits.R
+[33m71e0584[m Rename R/metrics_calc.R to packages/R/metrics_calc.R
+[33m63b8fe6[m Rename R/helpers.R to packages/R/helpers.R
+[33mf585814[m Rename R/global_variables.R to packages/R/global_variables.R
+[33m61afad2[m Delete packages/text
+[33m6468aa5[m Rename example_data.R to example_data.R
+[33mf63d630[m Rename R/example_data.R to R/packages/example_data.R
+[33m4361675[m Create text
+[33me78407f[m Delete packages
+[33mb72d5a1[m Create packages
+[33mc7363d5[m Create test_save_performance_report_docx.R
+[33m1403b13[m Update test_save_performance_report.R
+[33m0b27a3a[m Update README.md
+[33m9635732[m Update renv.lock
+[33m743c66b[m Update README.md
+[33m544d6f5[m Delete README
+[33m49b2c2e[m Create README.md
+[33m49514e7[m initial commit
+[33m57a0709[m Initial commit: upload package to github
+[33ma32ef5e[m First version of submission.package
