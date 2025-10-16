@@ -10,7 +10,87 @@
 #' @importFrom stats predict
 #'
 #' @return Variable-specific C-index for the event and 95% confidence intervals
+#'
+#' @details
+#' \strong{Fundamentals of Survival Data:}
+#' Survival analysis, also known as time-to-event analysis, deals with data
+#' where the outcome of interest is the time until an event occurs. This data
+#' has two key components:
+#' \itemize{
+#' \item \strong{Time:} The duration from a starting point to the event or the end of observation.
+#' \item \strong{Event Status:} A binary indicator of whether the event of interest occurred (e.g., 1 = event occurred, 0 = no event).
+#' }
+#' A crucial feature of survival data is \strong{censoring}. An observation is
+#' censored when we have partial information about its event time. For example,
+#' a study might end before a subject experiences the event. These censored
+#' observations are not discarded; they are used in the analysis up to the time
+#' they were last observed.
+#'
+#' \strong{Proportional Hazards Assumption:}
+#' The Cox model is built on the proportional hazards assumption. This assumes
+#' that the ratio of the hazards for any two individuals is constant over time.
+#' Since the C-index is often based on risk scores from a Cox model, the
+#' validity of the model (and thus the meaningfulness of the C-index) relies
+#' on this assumption being met.
+#'
+#' @section Statistical Method:
+#' \describe{
+#' \item{\strong{The Concordance Index (C-index):}}{
+#' The C-index (or Harrell's C-statistic) is a performance metric that
+#' measures the **discriminatory power** of a survival model. It quantifies
+#' how well the model's predicted risk scores can distinguish between subjects
+#' who will experience an event sooner versus later.
+#'
+#' Conceptually, it is the proportion of all usable pairs of subjects where
+#' the model correctly predicts that the subject with the higher risk score
+#' has the shorter survival time. The C-index ranges from 0 to 1, but is
+#' practically interpreted from 0.5 to 1.0:
+#' \itemize{
+#' \item \strong{1.0:} Perfect prediction. The model's risk scores perfectly rank the subjects' survival times.
+#' \item \strong{0.5:} No better than random chance. The model has no discriminatory ability.
+#' \item \strong{< 0.5:} Performance worse than random chance. This suggests the model's predictions are systematically inverted (e.g., it assigns higher risk scores to subjects who tend to survive longer). Inverting the predictions would result in a C-index of (1 - C-index).
+#' }
+#' The C-index is analogous to the Area Under the ROC Curve (AUC) but is adapted
+#' for use with censored time-to-event data.
+#' }
+#' \item{\strong{Calculation via Risk Scores from Cox Regression:}}{
+#' The C-index is calculated through a four-step process:
+#' \enumerate{
+#' \item \strong{Estimate Risk Scores}: A Cox proportional hazards model is
+#' first fitted to the data. Then, for each subject, a **risk score**
+#' (also called the linear predictor) is calculated based on their
+#' covariates and the model's estimated coefficients (\eqn{\beta}).
+#' \deqn{\text{Risk Score} = \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p}
+#' A higher score implies a higher predicted risk of experiencing the event.
+#'
+#' \item \strong{Form Informative Pairs}: All possible pairs of subjects
+#' are considered. A pair is deemed "informative" or "usable" if we can
+#' determine which subject had the event sooner. This includes all pairs
+#' where at least one subject experienced the event. Pairs where both subjects
+#' are censored are not informative.
+#'
+#' \item \strong{Evaluate Concordance}: Each informative pair is classified. A pair
+#' is **concordant** if the subject who experienced the event earlier had the
+#' higher risk score predicted by the model. A pair is **discordant** if
+#' the subject who experienced the event earlier had the lower risk score.
+#'
+#' \item \strong{Calculate the C-index}: The C-index is the ratio of concordant
+#' pairs to the total number of informative pairs.
+#' \deqn{C\text{-index} = \frac{\text{Number of Concordant Pairs}}{\text{Number of Informative Pairs}}}
+#' }
+#' }
+#' }
 #' @export
+#'
+#' @examples
+#' # Example Use
+#' ## Calculate c-index for "age" variable
+#' time_event=data$time_event
+#' censored=data$censored
+#'
+#' res=calc_c_index(time_event=time,
+#'                  censored=censored,
+#'                  var_name="age")
 calc_c_index=function(time_event,
                       censored,
                       var_name){

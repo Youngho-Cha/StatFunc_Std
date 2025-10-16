@@ -19,3 +19,75 @@ Hazard ratio for the event by group
 \description{
 Calculate the hazard ratio for the event by group
 }
+\details{
+\strong{Fundamentals of Survival Data:}
+Survival analysis, also known as time-to-event analysis, deals with data
+where the outcome of interest is the time until an event occurs. This data
+has two key components:
+\itemize{
+\item \strong{Time:} The duration from a starting point to the event or the end of observation.
+\item \strong{Event Status:} A binary indicator of whether the event of interest occurred (e.g., 1 = event occurred, 0 = no event).
+}
+A crucial feature of survival data is \strong{censoring}. An observation is
+censored when we have partial information about its event time. For example,
+a study might end before a subject experiences the event. These censored
+observations are not discarded; they are used in the analysis up to the time
+they were last observed.
+
+\strong{Proportional Hazards Assumption:}
+The Cox model is built on the proportional hazards assumption. This assumes
+that the ratio of the hazards for any two individuals is constant over time.
+In other words, the effect of a predictor variable (e.g., treatment) on the
+hazard of an event is consistent throughout the follow-up period. It is
+crucial to check this assumption (e.g., using \code{cox.zph}) to ensure the
+validity of the model's results.
+}
+\section{Statistical Method}{
+
+\describe{
+\item{\strong{Cox Proportional Hazards Regression:}}{
+The Cox proportional hazards model is a semi-parametric regression method
+used to investigate the association between predictor variables (covariates)
+and the time to an event. Unlike methods that model the survival time
+itself, the Cox model focuses on the \strong{hazard rate}—the instantaneous risk
+of an event occurring at a certain time, given survival up to that time.
+
+The model is defined by the hazard function:
+\deqn{h(t|X) = h_0(t) \exp(\beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p)}
+Where:
+\itemize{
+\item \eqn{h(t|X)} is the hazard rate at time \eqn{t} for an individual with a given set of covariates \eqn{X}.
+\item \eqn{h_0(t)} is the \strong{baseline hazard}, which is the hazard when all covariates are zero. It is the non-parametric part of the model.
+\item \eqn{\exp(...)} is the relative hazard, which is determined by the parametric part of the model.
+\item \eqn{\beta_1, \dots, \beta_p} are the regression coefficients estimated from the data, representing the effect of each covariate.
+\item \eqn{X_1, \dots, X_p} are the predictor variables.
+}}
+
+\item{\strong{Calculating the Hazard Ratio (HR):}}{
+The primary output from a fitted Cox model is the \strong{Hazard Ratio (HR)}. The HR compares the hazard rates of two groups or individuals.
+
+For a single predictor variable \eqn{X}, the hazard ratio between two individuals with values \eqn{X_a} and \eqn{X_b} is calculated as:
+\deqn{HR = \frac{h(t|X_a)}{h(t|X_b)} = \frac{h_0(t) \exp(\beta X_a)}{h_0(t) \exp(\beta X_b)} = \exp(\beta(X_a - X_b))}
+If the variable is binary (e.g., Treatment Group (1) vs. Control Group (0)), the formula simplifies to the exponentiated coefficient:
+\deqn{HR = \exp(\beta)}
+The interpretation is as follows:
+\itemize{
+\item \strong{HR = 1:} The predictor has no effect on the hazard rate.
+\item \strong{HR > 1:} The predictor is associated with an increased hazard of the event (a worse prognosis).
+\item \strong{HR < 1:} The predictor is associated with a decreased hazard of the event (a protective effect or better prognosis).
+}
+For a continuous variable, \eqn{\exp(\beta)} represents the change in hazard for each one-unit increase in the variable.
+}}
+}
+
+\examples{
+# Example Use
+## Calculate Hazard Ratio for the "age_class" group
+time_event=data$time_event
+censored=data$censored
+class=data$age_class
+
+res=calc_hazard_ratio(time_event=time_event,
+                      censored=censored,
+                      class=class)
+}
