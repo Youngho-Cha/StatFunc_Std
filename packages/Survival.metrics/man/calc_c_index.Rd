@@ -4,14 +4,14 @@
 \alias{calc_c_index}
 \title{Calculate C-index for the specific variables}
 \usage{
-calc_c_index(time_event, censored, var_name)
+calc_c_index(time_event, censored, class)
 }
 \arguments{
 \item{time_event}{The time elapsed until an event occurs}
 
 \item{censored}{Whether censoring occurred(0:censored, 1:event)}
 
-\item{var_name}{Variable used to calculate the C-index}
+\item{class}{Variable used to calculate the C-index}
 }
 \value{
 Variable-specific C-index for the event and 95\% confidence intervals
@@ -94,10 +94,11 @@ pairs to the total number of informative pairs.
 \examples{
 # Example Use
 ## Calculate c-index for "age" variable
-time_event=data$time_event
-censored=data$censored
+time_event=ex_data$time_event
+censored=ex_data$censored
+class=ex_data$age_class
 
-res=calc_c_index(time_event=time,
+res=calc_c_index(time_event=time_event,
                  censored=censored,
-                 var_name="age")
+                 class=class)
 }

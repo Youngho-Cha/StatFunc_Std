@@ -11,7 +11,7 @@
 #'
 #' @importFrom ggplot2 ggplot geom_step geom_ribbon labs theme_minimal ggsave scale_color_discrete scale_fill_discrete
 #' @importFrom broom tidy
-#' @importFrom dplyr bind_rows arrange
+#' @importFrom dplyr bind_rows arrange %>%
 #'
 #' @details
 #' \strong{Fundamentals of Survival Data:}
@@ -68,18 +68,42 @@
 #' @examples
 #' # Example Use
 #' ## Create surv plot for each "age_class" group
-#' res=calc_surv_rate(...)
-#' km_res=res$km
+#' time_event=ex_data$time_event
+#' censored=ex_data$censored
+#' class=ex_data$age_class
+#'
+#' km_res=survival::survfit(survival::Surv(time_event,censored)~class)
+#'
 #' legend_labels=c("age0 group","age1 group")
 #'
 #' create_surv_plot(km_res=km_res,
-#'                  filepath="C:/R/...",
+#'                  filepath="C:/R/example_km_plot.png",
 #'                  title="plot title..",
 #'                  x="x-axis label...",
 #'                  y="y-axis label...",
 #'                  legend_title="legend description...",
 #'                  legend_labels=legend_labels)
 create_surv_plot=function(km_res,filepath,title,x,y,legend_title,legend_labels){
+  dir_path=dirname(filepath)
+  if(!dir.exists(dir_path)){
+    stop(paste0("Directory does not exist: '",dir_path,"'"),call.=FALSE)
+  }
+
+  if(!inherits(km_res,"survfit")){
+    stop("Argument 'km_res' must be an object of class 'survfit'.",call.=FALSE)
+  }
+
+  if(is.null(km_res$strata)){
+    stop("'km_res' object must contain group (strata) information for comparison.",call.=FALSE)
+  }
+
+  n_groups=length(names(km_res$strata))
+  if(length(legend_labels)!=n_groups){
+    stop(paste0("Number of 'legend_labels' (",length(legend_labels),
+                ") does not match the number of groups in km_res (",n_groups,")."),
+         call.=FALSE)
+  }
+
   fit_df=tidy(km_res)
   start_points=data.frame(
     time=0,
@@ -88,12 +112,12 @@ create_surv_plot=function(km_res,filepath,title,x,y,legend_title,legend_labels){
     conf.low=1,
     strata=unique(fit_df$strata)
   )
-  fit_df=bind_rows(strata_points,fit_df) %>%
+  fit_df=bind_rows(start_points,fit_df) %>%
     arrange(strata,time)
 
-  p=ggplot(fit_df,aes(x=time,y=estimate,color=strata))+
+  p=ggplot(fit_df,ggplot2::aes(x=time,y=estimate,color=strata))+
     geom_step(linewidth=1.2)+
-    geom_ribbon(aes(ymin=conf.low,ymax=conf.high,fill=strata),alpha=0.2,linetype=0)+
+    geom_ribbon(ggplot2::aes(ymin=conf.low,ymax=conf.high,fill=strata),alpha=0.2,linetype=0)+
     labs(
       title=title,
       x=x,
@@ -111,6 +135,7 @@ create_surv_plot=function(km_res,filepath,title,x,y,legend_title,legend_labels){
     width=5.33,
     height=4,
     units="in",
-    dpi=150
+    dpi=150,
+    create.dir=FALSE
   )
 }

@@ -78,10 +78,12 @@ of the average survival time gained or lost due to the treatment or exposure.
 \examples{
 # Example Use
 ## Calculate RMST for each "age_class" group when the follow-up period is 10(years)
-time_event=data$time_event
-time_follow=10
-censored=data$censored
-class=data$age_class
+NOTE=NULL
+
+time_event=ex_data$time_event
+time_follow=12
+censored=ex_data$censored
+class=ifelse(ex_data$age_class=="age2",0,1)
 
 res=calc_rmst(time_event=time_event,
               time_follow=time_follow,
