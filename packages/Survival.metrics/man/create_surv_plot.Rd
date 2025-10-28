@@ -79,12 +79,16 @@ or worse prognosis over the follow-up period.
 \examples{
 # Example Use
 ## Create surv plot for each "age_class" group
-res=calc_surv_rate(...)
-km_res=res$km
+time_event=ex_data$time_event
+censored=ex_data$censored
+class=ex_data$age_class
+
+km_res=survival::survfit(survival::Surv(time_event,censored)~class)
+
 legend_labels=c("age0 group","age1 group")
 
 create_surv_plot(km_res=km_res,
-                 filepath="C:/R/...",
+                 filepath="C:/R/example_km_plot.png",
                  title="plot title..",
                  x="x-axis label...",
                  y="y-axis label...",

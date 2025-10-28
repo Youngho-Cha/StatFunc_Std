@@ -75,10 +75,10 @@
 #' # Example Use
 #' ## Calculate event frequency and rate at "1,3,5,7,10(year)" for each "age_class" group
 #'
-#' time_event=data$time_event
+#' time_event=ex_data$time_event
 #' time_vector=c(1,3,5,7,10)
-#' censored=data$censored
-#' class=data$age_class
+#' censored=ex_data$censored
+#' class=ex_data$age_class
 #'
 #' res=calc_freq_rate(time_event=time_event,
 #'                    time_vector=time_vector,
@@ -91,6 +91,18 @@ calc_freq_rate=function(time_event,
                         time_vector,
                         censored,
                         class){
+  if(length(time_event)!=length(censored)||length(time_event)!=length(class)){
+    stop("Input vectors 'time_event','censored',and 'class' must have the same length.",call.=FALSE)
+  }
+
+  if(length(unique(class))!=2){
+    stop("Argument 'class' must contain two distinct groups.",call.=FALSE)
+  }
+
+  if(length(time_vector)==0){
+    stop("Argument 'time_vector' cannot be empty.", call.=FALSE)
+  }
+
   km_res=survfit(Surv(time_event,censored)~class)
   km=summary(km_res)
 

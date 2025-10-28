@@ -3,7 +3,7 @@
 #'
 #' @param time_event The time elapsed until an event occurs
 #' @param censored Whether censoring occurred(0:censored, 1:event)
-#' @param var_name Variable used to calculate the C-index
+#' @param class Variable used to calculate the C-index
 #'
 #' @importFrom survival coxph
 #' @importFrom survcomp concordance.index
@@ -85,16 +85,29 @@
 #' @examples
 #' # Example Use
 #' ## Calculate c-index for "age" variable
-#' time_event=data$time_event
-#' censored=data$censored
+#' time_event=ex_data$time_event
+#' censored=ex_data$censored
+#' class=ex_data$age_class
 #'
-#' res=calc_c_index(time_event=time,
+#' res=calc_c_index(time_event=time_event,
 #'                  censored=censored,
-#'                  var_name="age")
+#'                  class=class)
 calc_c_index=function(time_event,
                       censored,
-                      var_name){
-  cox_model=coxph(Surv(time_event,censored)~var_name)
+                      class){
+  if(length(time_event)!=length(censored)){
+    stop("Input vectors 'time_event','censored' must have the same length.",call.=FALSE)
+  }
+
+  if(sum(censored)==0){
+    stop("Cannot calculate C-index: no events observed in the data.",call.=FALSE)
+  }
+
+  if(length(unique(class))==1){
+    stop("Cannot calculate C-index: predictor variable has zero variance.",call.=FALSE)
+  }
+
+  cox_model=coxph(Surv(time_event,censored)~class)
   risk_score=predict(cox_model,type="lp")
   c_index=concordance.index(x=risk_score,
                             surv.time=time_event,

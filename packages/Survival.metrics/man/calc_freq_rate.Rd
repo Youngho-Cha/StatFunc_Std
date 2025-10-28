@@ -86,10 +86,10 @@ hypothesis.
 # Example Use
 ## Calculate event frequency and rate at "1,3,5,7,10(year)" for each "age_class" group
 
-time_event=data$time_event
+time_event=ex_data$time_event
 time_vector=c(1,3,5,7,10)
-censored=data$censored
-class=data$age_class
+censored=ex_data$censored
+class=ex_data$age_class
 
 res=calc_freq_rate(time_event=time_event,
                    time_vector=time_vector,

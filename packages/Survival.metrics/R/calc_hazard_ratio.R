@@ -74,9 +74,9 @@
 #' @examples
 #' # Example Use
 #' ## Calculate Hazard Ratio for the "age_class" group
-#' time_event=data$time_event
-#' censored=data$censored
-#' class=data$age_class
+#' time_event=ex_data$time_event
+#' censored=ex_data$censored
+#' class=ex_data$age_class
 #'
 #' res=calc_hazard_ratio(time_event=time_event,
 #'                       censored=censored,
@@ -84,6 +84,18 @@
 calc_hazard_ratio=function(time_event,
                            censored,
                            class){
+  if(length(time_event)!=length(censored)||length(time_event)!=length(class)){
+    stop("Input vectors 'time_event','censored',and 'class' must have the same length.",call.=FALSE)
+  }
+
+  if(length(unique(class))!=2){
+    stop("Argument 'class' must contain two distinct groups.",call.=FALSE)
+  }
+
+  if(sum(censored)==0){
+    stop("Cannot calculate Hazard Ratio: no events observed in the data.",call.=FALSE)
+  }
+
   cox_model=coxph(Surv(time_event,censored)~class)
   ratio=exp(cox_model$coefficients)
 
