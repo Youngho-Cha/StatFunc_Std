@@ -36,9 +36,9 @@ This step installs all required dependency packages using the exact versions spe
 1. Open the root R project in RStudio.
 
 2. When the project opens, `renv` should automatically start. In the R console, run the following command to restore the environment:
-```r
-renv::restore()
-```
+   ```r
+   renv::restore()
+   ```
 3. 
 
 ### Step 3: Install the Package
