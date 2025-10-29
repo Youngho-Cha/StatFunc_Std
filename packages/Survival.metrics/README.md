@@ -15,62 +15,45 @@ This package helps to calculate the following evaluation metrics using survival 
 
 ---
 
-## 📥 Installation
+## 🔧 Setup and Usage Guide
 
-Before download package, You need to authenticate with GitHub using a Personal Access Token (PAT). This is a one-time setup that will allow devtools to securely access and install the package. 
+This repository contains standardized R functions for clinical analysis, managed as a monorepo. It uses `renv` to ensure a 100% reproducible analysis environment across all packages.
 
-### Step 1: Create a GitHub Personal Access Token (PAT)
-1. Log in to GitHub and navigate to your <span style="color:red;">Settings</span>.
-2. In the left sidebar, click Developer settings, then Personal access tokens.
-3. Click Generate new token.
-4. Token Scopes: Select a descriptive name for the token (e.g., R-package-access) and set an expiration date. Crucially, under "Select scopes," check the     box for repo. This is the minimum permission required to install a private repository.
-5. Click Generate token.
-6. Copy the token immediately. GitHub will only show you the token once. Save it in a secure location (e.g., a password manager).
+This workflow is designed for internal validation and analysis, not for traditional package installation via `install_github`.
 
-### Step 2: Configure R to Use the PAT
-For a seamless experience, you should store your PAT as a GITHUB_PAT environment variable in your R session. This only needs to be done once per machine.
+### Step 1: Clone the Repository
+First, clone this repository to your local machine using Git.
 
-**Method A: For a Permanent Setup (Recommended)**
-Use the usethis package to automatically set up the environment variable.
-1. Install usethis if you don't have it:
-```r
-install.packages("usethis")
-```
-2. Open the .Renviron file using this command. This file is loaded automatically by R at startup.
-```r
-usethis::edit_r_environ()
-```
-3. Add the following line to the file, replacing "your_personal_access_token_here" with the token you copied in Step 1:
-4. GITHUB_PAT="your_personal_access_token_here"
-5. Save the file and restart your R session.
-
-**Method B: For a Temporary, One-Time Session**
-If you prefer not to set up the token permanently, you can set it for the current R session only.
-
-```r
-Sys.setenv(GITHUB_PAT = "your_personal_access_token_here")
+```Bash
+git clone https://github.com/YourOrganization/YourRepoName.git
 ```
 
-### Step 3: Install the Package
-Once your GITHUB_PAT environment variable is set up, you can install the package using devtools as you would with any other GitHub repository.
+### Step 2: Restore the Standardized Environment
+This step installs all required dependency packages using the exact versions specified in the master renv.lock file.
 
-Install the package directly from GitHub using:
+1. Open the root R project in RStudio.
+
+2. When the project opens, `renv` should automatically start. In the R console, run the following command to restore the environment:
+   ```r
+   renv::restore()
+   ```
+3. If you are prompted with a list of packages to update (like in the image you showed me), you must select the option for "None" (e.g., input "3").
+   This ensures you are using the exact validated versions from the renv.lock file, which is critical for reproducibility.
+
+### Step 3: Load and Use Package Functions
+The functions are located in sub-folders within the packages/ directory. To use them in your script, you must load them directly from their source folder using `devtools::load_all()`.
 ```r
-# Make sure you have the devtools package installed
-# install.packages("devtools")
-
-# Install the package from this repository
-devtools::install_github("jnpmedi/MTNG_Biostat_R",subdir="packages/Survival.metrics")
+devtools::load_all(path="packages/Survival.metrics")
 ```
 
-This command will automatically use the GITHUB_PAT environment variable for authentication, allowing it to access our private repository.
+Do not use `library()`, as we are loading the code directly, not an installed package.
 
 ---
 
 ## 💡 Example Usage
 추후 example data 추가 등, 예제 코드 작성을 위한 요소들이 준비되면 해당 부분 작성 예정
 ```r
-library(Survival.metrics)
+
 ```
 
 ---
