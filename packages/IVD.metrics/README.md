@@ -39,7 +39,8 @@ This step installs all required dependency packages using the exact versions spe
    ```r
    renv::restore()
    ```
-3. 
+3. If you are prompted with a list of packages to update (like in the image you showed me), you must select the option for "None" (e.g., input "3").
+   This ensures you are using the exact validated versions from the renv.lock file, which is critical for reproducibility.
 
 ### Step 3: Install the Package
 Once your GITHUB_PAT environment variable is set up, you can install the package using devtools as you would with any other GitHub repository.
