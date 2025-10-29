@@ -68,10 +68,12 @@
 #' @examples
 #' # Example Use
 #' ## Calculate RMST for each "age_class" group when the follow-up period is 10(years)
-#' time_event=data$time_event
-#' time_follow=10
-#' censored=data$censored
-#' class=data$age_class
+#' NOTE=NULL
+#'
+#' time_event=ex_data$time_event
+#' time_follow=12
+#' censored=ex_data$censored
+#' class=ifelse(ex_data$age_class=="age2",0,1)
 #'
 #' res=calc_rmst(time_event=time_event,
 #'               time_follow=time_follow,
@@ -84,9 +86,19 @@ calc_rmst=function(time_event,
                    time_follow,
                    censored,
                    class){
+  if(length(time_event)!=length(censored)||length(time_event)!=length(class)){
+    stop("Input vectors 'time_event','censored',and 'class' must have the same length.",call.=FALSE)
+  }
+  n_groups=length(unique(stats::na.omit(class)))
+  if(n_groups!=2){
+    stop("Argument 'class' must contain exactly two distinct groups.",call.=FALSE)
+  }
+
   rmst_res=rmst2(time=time_event,status=censored,arm=class,tau=time_follow)
   res_class0=data.frame(risk="class0",rbind(rmst_res$RMST.arm0$rmst[c("Est.","lower .95","upper .95")]))
+  colnames(res_class0)=c("group","rmst","lower","upper")
   res_class1=data.frame(risk="class1",rbind(rmst_res$RMST.arm1$rmst[c("Est.","lower .95","upper .95")]))
+  colnames(res_class1)=c("group","rmst","lower","upper")
 
   return(list(class0=res_class0,class1=res_class1))
 }

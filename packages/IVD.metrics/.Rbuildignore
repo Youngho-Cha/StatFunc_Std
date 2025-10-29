@@ -1,7 +1,0 @@
-^renv$
-^renv\.lock$
-^IVD\.metrics\.Rproj$
-^\.Rproj\.user$
-^LICENSE\.md$
-^\.Rproj$
-^data-raw$

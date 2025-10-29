@@ -3,7 +3,7 @@ Title: Survival anaylsis
 Version: 0.1.0
 Authors@R: 
     person("Youngho", "Cha", , "cswer123@naver.com", role = c("aut", "cre"))
-Description: Calculate metrics about survival anaylsis
+Description: Calculate metrics about survival anaylsis.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -12,10 +12,16 @@ Imports:
     broom,
     dplyr,
     ggplot2,
-    renv,
-    rmarkdown,
     stats,
     survcomp,
     survival,
-    survminer,
     survRM2
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Depends: 
+    R (>= 3.5)
+LazyData: true
+Config/testthat/edition: 3
