@@ -44,11 +44,12 @@ This step installs all required dependency packages using the exact versions spe
 
 ### Step 3: Load and Use Package Functions
 The functions are located in sub-folders within the packages/ directory. To use them in your script, you must load them directly from their source folder using `devtools::load_all()`.
-
-Do not use `library()`, as we are loading the code directly, not an installed package.
 ```r
 devtools::load_all(path="packages/IVD.metrics")
 ```
+
+Do not use `library()`, as we are loading the code directly, not an installed package.
+
 
 ---
 
