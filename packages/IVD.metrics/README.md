@@ -42,19 +42,13 @@ This step installs all required dependency packages using the exact versions spe
 3. If you are prompted with a list of packages to update (like in the image you showed me), you must select the option for "None" (e.g., input "3").
    This ensures you are using the exact validated versions from the renv.lock file, which is critical for reproducibility.
 
-### Step 3: Install the Package
-Once your GITHUB_PAT environment variable is set up, you can install the package using devtools as you would with any other GitHub repository.
+### Step 3: Load and Use Package Functions
+The functions are located in sub-folders within the packages/ directory. To use them in your script, you must load them directly from their source folder using `devtools::load_all()`.
 
-Install the package directly from GitHub using:
+Do not use `library()`, as we are loading the code directly, not an installed package.
 ```r
-# Make sure you have the devtools package installed
-# install.packages("devtools")
-
-# Install the package from this repository
-devtools::install_github("jnpmedi/MTNG_Biostat_R",subdir="packages/IVD.metrics")
+devtools::load_all(path="packages/IVD.metrics")
 ```
-
-This command will automatically use the GITHUB_PAT environment variable for authentication, allowing it to access our private repository.
 
 ---
 
@@ -62,8 +56,6 @@ This command will automatically use the GITHUB_PAT environment variable for auth
 
 * `calc_binary_metrics` 
 ```r
-library(IVD.metrics)
-
 data(ex_data)
 
 ## Select metrics to calculate
@@ -94,8 +86,6 @@ res_ci_accuracy=res_ci$accuracy
 
 * `calc_auc`
 ```r
-library(IVD.metrics)
-
 data(ex_data)
 
 ## Use default method for calculating confidence interval
