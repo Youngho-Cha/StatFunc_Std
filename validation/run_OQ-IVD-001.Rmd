@@ -1,0 +1,134 @@
+---
+title: "run_OQ-IVD-001-cp"
+output: html_document
+---
+
+# 표준 데이터 생성
+```{r}
+
+TP=84
+TN=92
+FP=43
+FN=10
+
+actual_vector=c(rep(1,TP),rep(1,FN),rep(0,FP),rep(0,TN))
+predicted_vector=c(rep(1,TP),rep(0,FN),rep(1,FP),rep(0,TN))
+
+```
+
+# run_OQ-IVD-001-cp
+## 기대 결과(참값) 도출
+```{r}
+
+## 혼동행렬(혼동행렬은 모두 동일하므로 한 번만 산출)
+predict_pos=c(TP,FP,sum(TP+FP))
+predict_neg=c(FN,TN,sum(FN+TN))
+tot=c(sum(TP+FN),sum(FP+TN),sum(TP+FP+TN+FN))
+pred_cf=data.frame(predict_pos,predict_neg,tot)
+rownames(pred_cf)=c("GT_pos","GT_neg","Total")
+
+## 민감도
+pred_sen_cp=DescTools::BinomCI(x=TP,n=TP+FN,conf.level=0.95,method="clopper-pearson")
+
+## 특이도
+pred_spe_cp=DescTools::BinomCI(x=TN,n=TN+FP,conf.level=0.95,method="clopper-pearson")
+
+## 양성예측도
+pred_ppv_cp=DescTools::BinomCI(x=TP,n=TP+FP,conf.level=0.95,method="clopper-pearson")
+
+## 음성예측도
+pred_npv_cp=DescTools::BinomCI(x=TN,n=TN+FN,conf.level=0.95,method="clopper-pearson")
+
+## 정확도
+pred_acc_cp=DescTools::BinomCI(x=TP+TN,n=TP+FN+TN+FP,conf.level=0.95,method="clopper-pearson")
+
+```
+
+## 실제 결과 도출
+```{r}
+
+act_res_cp=calc_binary_metrics(actual_vector,predicted_vector,ci_method="cp")
+
+act_cf_cp=act_res_cp$confusion_matrix 
+act_sen_cp=act_res_cp$sensitivity
+act_spe_cp=act_res_cp$specificity
+act_ppv_cp=act_res_cp$ppv
+act_npv_cp=act_res_cp$npv
+act_acc_cp=act_res_cp$accuracy
+
+```
+
+################################################################################
+
+# run_OQ-IVD-001-wilson
+## 기대 결과(참값) 도출
+```{r}
+
+## 민감도
+pred_sen_wilson=DescTools::BinomCI(x=TP,n=TP+FN,conf.level=0.95,method="wilson")
+
+## 특이도
+pred_spe_wilson=DescTools::BinomCI(x=TN,n=TN+FP,conf.level=0.95,method="wilson")
+
+## 양성예측도
+pred_ppv_wilson=DescTools::BinomCI(x=TP,n=TP+FP,conf.level=0.95,method="wilson")
+
+## 음성예측도
+pred_npv_wilson=DescTools::BinomCI(x=TN,n=TN+FN,conf.level=0.95,method="wilson")
+
+## 정확도
+pred_acc_wilson=DescTools::BinomCI(x=TP+TN,n=TP+FN+TN+FP,conf.level=0.95,method="wilson")
+
+```
+
+## 실제 결과 도출
+```{r}
+
+act_res_wilson=calc_binary_metrics(actual_vector,predicted_vector,ci_method="wilson")
+
+act_cf_wilson=act_res_wilson$confusion_matrix
+act_sen_wilson=act_res_wilson$sensitivity
+act_spe_wilson=act_res_wilson$specificity
+act_ppv_wilson=act_res_wilson$ppv
+act_npv_wilson=act_res_wilson$npv
+act_acc_wilson=act_res_wilson$accuracy
+
+```
+
+################################################################################
+
+# run_OQ-IVD-001-wald
+## 기대 결과(참값) 도출
+```{r}
+
+## 민감도
+pred_sen_wald=DescTools::BinomCI(x=TP,n=TP+FN,conf.level=0.95,method="wald")
+
+## 특이도
+pred_spe_wald=DescTools::BinomCI(x=TN,n=TN+FP,conf.level=0.95,method="wald")
+
+## 양성예측도
+pred_ppv_wald=DescTools::BinomCI(x=TP,n=TP+FP,conf.level=0.95,method="wald")
+
+## 음성예측도
+pred_npv_wald=DescTools::BinomCI(x=TN,n=TN+FN,conf.level=0.95,method="wald")
+
+## 정확도
+pred_acc_wald=DescTools::BinomCI(x=TP+TN,n=TP+FN+TN+FP,conf.level=0.95,method="wald")
+
+```
+
+## 실제 결과 도출
+```{r}
+
+act_res_wald=calc_binary_metrics(actual_vector,predicted_vector,ci_method="wald")
+
+act_cf_wald=act_res_wald$confusion_matrix
+act_sen_wald=act_res_wald$sensitivity
+act_spe_wald=act_res_wald$specificity
+act_ppv_wald=act_res_wald$ppv
+act_npv_wald=act_res_wald$npv
+act_acc_wald=act_res_wald$accuracy
+
+```
+
