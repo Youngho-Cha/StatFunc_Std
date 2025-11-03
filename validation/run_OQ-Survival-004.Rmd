@@ -1,0 +1,31 @@
+---
+title: "run_OQ-Survival-004"
+output: html_document
+---
+
+# lung 데이터 로드
+```{r}
+
+lung=survival::lung
+
+time=lung$time
+status=lung$status
+sex=lung$sex
+
+```
+
+# OQ-survival-004
+## 기대 결과(참값) 도출
+```{r}
+
+pred_model=survival::coxph(survival::Surv(time,status-1)~sex)
+pred_res=exp(pred_model$coefficient)
+
+```
+
+## 실제 결과 도출
+```{r}
+
+act_res=calc_hazard_ratio(time,status-1,sex)
+
+```

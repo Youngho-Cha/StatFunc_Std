@@ -1,0 +1,36 @@
+---
+title: "run_OQ-Survival-003"
+output: html_document
+---
+
+# lung 데이터 로드
+```{r}
+
+lung=survival::lung
+
+time=lung$time
+status=lung$status
+sex=lung$sex
+
+```
+
+# OQ-survival-003
+## 기대 결과(참값) 도출
+```{r}
+
+pred_res=survRM2::rmst2(time=time,status=status-1,arm=sex-1,tau=800)
+
+pred_res_class0=pred_res$RMST.arm0$rmst[c("Est.","lower .95","upper .95")]
+pred_res_class1=pred_res$RMST.arm1$rmst[c("Est.","lower .95","upper .95")]
+
+```
+
+## 실제 결과 도출
+```{r}
+
+act_res=calc_rmst(time,800,status-1,sex-1)
+
+act_res_class0=act_res$class0
+act_res_class1=act_res$class1
+
+```

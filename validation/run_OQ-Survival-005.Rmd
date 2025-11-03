@@ -1,0 +1,37 @@
+---
+title: "run_OQ-Survival-005"
+output: html_document
+---
+
+# lung 데이터 로드
+```{r}
+
+lung=survival::lung
+
+time=lung$time
+status=lung$status
+sex=lung$sex
+
+```
+
+# OQ-survival-005
+## 기대 결과(참값) 도출
+```{r}
+
+pred_model=survival::coxph(survival::Surv(time,status-1)~sex) 
+
+pred_risk_score=stats::predict(pred_model,type="lp")
+pred_res=survcomp::concordance.index(x=pred_risk_score,
+                                     surv.time=time,
+                                     surv.event=status-1,
+                                     method="noether")
+pred_res_cindex=pred_res[c("c.index","lower","upper")]
+
+```
+
+## 실제 결과 도출
+```{r}
+
+act_res_cindex=calc_c_index(time,status-1,sex)
+
+```

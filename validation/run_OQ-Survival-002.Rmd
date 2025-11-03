@@ -1,0 +1,83 @@
+---
+title: "run_OQ-Survival-002"
+output: html_document
+---
+
+# lung 데이터 로드
+```{r}
+
+lung=survival::lung
+
+time=lung$time
+status=lung$status
+sex=lung$sex
+
+```
+
+# OQ-survival-002
+## 기대 결과(참값) 도출
+```{r}
+
+pred_km=survival::survfit(survival::Surv(time,status-1)~sex) 
+pred_km_summary=summary(pred_km)
+
+## class0
+### time=100
+pred_event_100_class0=sum(pred_km_summary$n.event[pred_km_summary$time<=100 & 
+                                            pred_km_summary$strata==levels(pred_km_summary$strata)[1]])
+pred_rate_100_class0=pred_event_100_class0/pred_km_summary$n[1]
+
+## time=200
+pred_event_200_class0=sum(pred_km_summary$n.event[pred_km_summary$time<=200 & 
+                                            pred_km_summary$strata==levels(pred_km_summary$strata)[1]])
+pred_rate_200_class0=pred_event_200_class0/pred_km_summary$n[1]
+
+## time=500
+pred_event_500_class0=sum(pred_km_summary$n.event[pred_km_summary$time<=500 & 
+                                            pred_km_summary$strata==levels(pred_km_summary$strata)[1]])
+pred_rate_500_class0=pred_event_500_class0/pred_km_summary$n[1]
+
+## time=800
+pred_event_800_class0=sum(pred_km_summary$n.event[pred_km_summary$time<=800 & 
+                                            pred_km_summary$strata==levels(pred_km_summary$strata)[1]])
+pred_rate_800_class0=pred_event_800_class0/pred_km_summary$n[1]
+
+################################################################################
+
+##class1
+### time=100
+pred_event_100_class1=sum(pred_km_summary$n.event[pred_km_summary$time<=100 & 
+                                            pred_km_summary$strata==levels(pred_km_summary$strata)[2]])
+pred_rate_100_class1=pred_event_100_class1/pred_km_summary$n[2]
+
+## time=200
+pred_event_200_class1=sum(pred_km_summary$n.event[pred_km_summary$time<=200 & 
+                                            pred_km_summary$strata==levels(pred_km_summary$strata)[2]])
+pred_rate_200_class1=pred_event_200_class1/pred_km_summary$n[2]
+
+## time=500
+pred_event_500_class1=sum(pred_km_summary$n.event[pred_km_summary$time<=500 & 
+                                            pred_km_summary$strata==levels(pred_km_summary$strata)[2]])
+pred_rate_500_class1=pred_event_500_class1/pred_km_summary$n[2]
+
+## time=800
+pred_event_800_class1=sum(pred_km_summary$n.event[pred_km_summary$time<=800 & 
+                                            pred_km_summary$strata==levels(pred_km_summary$strata)[2]])
+pred_rate_800_class1=pred_event_800_class1/pred_km_summary$n[2]
+
+```
+
+## 실제 결과 도출
+```{r}
+
+act=calc_freq_rate(time,c(100,200,500,800),status,sex)
+
+act_km=act$km
+act_res_class0=act$class0
+act_res_class1=act$class1
+
+```
+
+
+
+

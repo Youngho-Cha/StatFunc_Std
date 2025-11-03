@@ -1,0 +1,66 @@
+---
+title: "run_OQ-IVD-002"
+output: html_document
+---
+
+# aSAH 데이터 로드
+```{r}
+
+aSAH=pROC::aSAH
+
+actual=aSAH$outcome
+score=aSAH$wfns
+
+```
+
+# run_OQ-IVD-002-delong
+## 기대 결과(참값) 도출
+```{r}
+
+pred_res_delong=pROC::roc(actual,score,ci.method="delong",ci=T)
+auc_delong=as.numeric(pred_res_delong$auc)
+ci_delong=c(as.numeric(pred_res_delong$ci)[1],
+            as.numeric(pred_res_delong$ci)[3])
+pred_auc_delong=data.frame(value=auc_delong,
+                           lower=ci_delong[1],
+                           upper=ci_delong[2])
+
+```
+
+## 실제 결과 도출
+```{r}
+
+actual_binary=ifelse(actual=="Poor",1,0)
+
+act_delong=calc_auc(actual_binary,score,ci_method="delong")
+act_res_delong=act_delong$roc_res
+act_auc_delong=act_delong$auc
+
+```
+
+################################################################################
+
+# run_OQ-IVD-002-bootstrap
+## 기대 결과(참값) 도출
+```{r}
+
+set.seed(1234)
+pred_res_bootstrap=pROC::roc(actual,score,ci.method="bootstrap",n=2000,ci=T)
+auc_bootstrap=as.numeric(pred_res_bootstrap$auc)
+ci_bootstrap=c(as.numeric(pred_res_bootstrap$ci)[1],
+            as.numeric(pred_res_bootstrap$ci)[3])
+pred_auc_bootstrap=data.frame(value=auc_bootstrap,
+                           lower=ci_bootstrap[1],
+                           upper=ci_bootstrap[2])
+
+```
+
+## 실제 결과 도출
+```{r}
+
+act_bootstrap=calc_auc(actual_binary,score,ci_method="bootstrap",boot_n=2000)
+act_res_bootstrap=act_bootstrap$roc_res
+act_auc_bootstrap=act_bootstrap$auc
+
+```
+
