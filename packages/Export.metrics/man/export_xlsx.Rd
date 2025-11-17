@@ -19,3 +19,33 @@ An Excel file containing the output lists
 \description{
 Output the results as a excel file
 }
+\examples{
+# example code
+
+## 1. Create list of the data
+temp_png_file=tempfile(fileext=".png")
+img_data=array(c(1,0,0),dim=c(100,100,3))
+png::writePNG(img_data,target=temp_png_file)
+
+example_data=data.frame(
+  Metric=c("Mean","SD","N"),
+  Result=c(10.5,1.23,10)
+)
+
+example_data_list=list(
+  "Statistical Results"=example_data,
+  "Result Plot"=temp_png_file
+)
+
+## 2. Create temporary file
+temp_excel_file=tempfile(fileext=".xlsx")
+
+## 3. Export example data list to the temporary excel result file
+suppressMessages(
+    export_xlsx(
+      output_list=example_data_list,
+      file_path=temp_excel_output,
+      sheet_name="AnalysisReport"
+    )
+  )
+}

@@ -1,0 +1,178 @@
+---
+title: "Requirement_Specification"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Requirement_Specification}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+# library(Export.metrics)
+```
+
+# 1. export_xlsx
+
+## 1.1 Overview
+This function automates the process of exporting a named R list—typically containing analysis results like data.frame objects and image file paths—into a single, formatted Excel worksheet.
+
+The function is designed as a standardized wrapper primarily utilizing the `openxlsx` package. Its primary goal is to automate the repetitive task of report generation, ensuring that outputs from various analysis packages (e.g., `IVD.metrics`, `Survival.metrics`) are saved in a consistent, human-readable format. It iterates through the input list, writing list names as titles, data.frame elements as tables, and valid image file paths as embedded images.
+
+## 1.2 Input
+* `output_list`: 
+  + A named list containing the R objects to be exported. 
+  + The function iterates over this list. Each element's name is used as a title in the Excel report.
+  + The function specifically processes elements that are data.frame objects or character strings that
+  are valid file paths to images.
+
+* `file_path`: 
+  + A character string specifying the full path and filename for the output Excel file (e.g.,
+  "C:/results/report.xlsx").
+  + If the file already exists, the function will load it and modify it. If not, a new file will be
+  created.
+
+* `sheet_name`: 
+  + A character string specifying the name of the worksheet to create or modify within the Excel file.
+  + The default value is "Report".
+  + If a sheet with this name already exists in the file, it will be removed and recreated.
+
+## 1.3 Processing Logic
+1. The function first checks if the file specified by the `file_path` argument already exists.
+
+2. If the file exists, it is loaded into memory using `openxlsx::loadWorkbook`.
+
+3. If a sheet with the name matching `sheet_name` already exists within this loaded workbook, it is removed.
+
+4. If the file specified by `file_path` does not exist, a new, empty workbook is created using `openxlsx::createWorkbook`.
+
+5. A new, blank worksheet, named according to the `sheet_name` argument, is added to the workbook.
+
+6. A row counter (`current_row`) is initialized to 1 to track the writing position on the worksheet.
+
+7. The function then begins to loop through each element in the input `output_list`.
+
+8. For each element in the loop, the name of the list element (e.g., `names(output_list)[i]`) is written to the sheet at the `current_row` position using a bold style, after which the row counter is advanced by one.
+
+9. The function then inspects the content of that list element to determine its type.
+
+  9.1 If the content is a data.frame, it is written to the sheet starting at the new `current_row`
+  position using `openxlsx::writeData`. Column widths are automatically adjusted, and the `current_row`
+  counter is advanced by the number of rows in the data frame plus three (to add spacing).
+
+  9.2 If the content is a character string and that string is a valid file path to an existing file,
+  the function attempts to embed the image from that path onto the sheet using `openxlsx::insertImage`.
+  The `current_row` counter is then advanced by 22 rows (to approximate image height and add spacing).
+
+  9.3 If the content is neither a data.frame nor a valid image file path, that element is skipped, and
+  a warning message is printed to the R console.
+
+10. After the loop has processed all elements in `output_list`, the entire workbook is saved to the
+`file_path` using `openxlsx::saveWorkbook`, overwriting any pre-existing file at that location.
+
+11.Finally, a success message is printed to the R console confirming that the file has been saved.
+
+## 1.4 Output
+This function does not return any R object. Its output is a side effect, which consists of:
+
+1. The creation (or modification) of an .xlsx file on the local file system at the location specified by the file_path argument.
+2. A confirmation message printed to the R console indicating that the save operation was successful.
+
+## 1.5 Error & Exception Handling
+* **Missing Required Arguments:** 
+  + The function will stop with an R error if the mandatory arguments, `output_list` or `file_path`, are not provided.
+
+* **Invalid File Path:** 
+  + The function will stop execution and throw an explicit error if the directory specified in the
+  `file_path` does not exist (this is checked by the dir.exists guard clause).
+  + An error will also occur during the `saveWorkbook` step if the program lacks write permissions for
+  the specified `file_path`.
+  
+* **Unsupported Content in output_list (Warning):** 
+  + The function will not stop if an element within `output_list` is of an unsupported type (i.e., not
+  a data.frame and not a valid image file path).
+  + Instead, it will bypass that element, print a warning() message to the console indicating that the
+  item was skipped, and continue processing the rest of the list.
+  
+* **Invalid Image Path (Warning):** 
+  + If an element is a character string but `file.exists()` returns FALSE (i.e., it is not a valid
+  path to an image), it will be treated as "Unsupported Content" and will trigger a warning, not an
+  error.
+  
+* **Unnamed List Elements:**
+  + If the `output_list` is not a named list, the function will not stop. However, the titles written
+  to the Excel file for each item will be blank or NA.
+
+# 2. push_result
+
+## 2.1 Overview
+This function provides a standardized method for programmatically "pushing" R objects (e.g., analysis results) into a specific cell coordinate within an existing Excel template file.
+
+Its primary purpose is to automate the population of Statistical Analysis Report (SAR) templates or other structured table shells, preventing the manual copy-paste errors that can occur when populating pre-formatted files. The function is a dedicated wrapper for the openxlsx package, designed to load, modify, and save an existing workbook with high precision.
+
+## 2.2 Input
+* `file_path`: 
+  + A character string specifying the full path to an existing Excel template file (e.g.,
+  "C:/templates/SAR_template.xlsx").
+  + The function is designed to load and modify this existing file.
+
+* `sheet_name`: 
+  + A character string specifying the exact name of the worksheet within the workbook where the data
+  will be written.
+
+* `startcol`: 
+  + A numeric value specifying the column number (e.g., 5 for column 'E') where the `result` should be
+  placed.
+
+* `startrow`: 
+  + A numeric value specifying the row number where the `result` should be placed.
+
+* `result`: 
+  + The R object (e.g., a data frame, a single value) to be written into the specified cell
+  coordinate.
+
+## 2.3 Processing Logic
+1. The function loads the existing Excel workbook from the location specified by `file_path` into memory using `openxlsx::loadWorkbook`.
+
+2. It then writes the content of the result object to the specified `sheet_name`.
+
+3. The data is placed at the exact coordinate defined by the `startCol` and `startRow` arguments.
+
+4. Crucially, the `writeData` operation is performed with `colNames=FALSE` and `rowNames=FALSE` to ensure that only the raw result object is written, without any headers or row identifiers.
+
+5. After writing the data, the function saves the modified workbook back to the original `file_path`, overwriting the existing file.
+
+6. Finally, the function invisibly returns the `file_path` to allow for potential piping or reassignment, without printing the path to the console.
+
+## 2.4 Output
+This function primarily results in a side effect, which is the modification of the Excel file specified in `file_path`.
+
+Additionally, the function invisibly returns the `file_path` (a character string). This means the path is returned as an R object for potential use in scripts (like piping), but it does not automatically print to the console upon completion.
+
+## 2.5 Error & Exception Handling
+* **Missing Required Arguments:** 
+  + he function will stop with a standard R error if any of the mandatory arguments (`file_path`,
+  `sheet_name`, `startcol`, `startrow`, or `result`) are not provided.
+  
+* **File Not Found:**
+  + The function will stop execution and throw an error from `openxlsx::loadWorkbook` if the file
+  specified by `file_path` does not exist, is not a valid Excel file, or cannot be read.
+  
+* **Sheet Not Found:**
+  + The function will stop and throw an error from `openxlsx::writeData` if the `sheet_name` provided
+  does not match an existing sheet within the loaded workbook.
+
+* **Save/Permission Errors:**
+  + The function will stop and throw an error from `openxlsx::saveWorkbook` if the file at `file_path`
+  is currently open (e.g., in Microsoft Excel) or if the program lacks the necessary write permissions
+  for that file location.
+
+
+
+

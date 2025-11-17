@@ -1,6 +1,6 @@
 Package: Export.metrics
 Title: Export analysis results to Excel automatically
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     person("Youngho", "Cha", , "cswer123@naver.com", role = c("aut", "cre"))
 Description: Saves the data frame containing the analysis results to an Excel file
@@ -10,3 +10,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports: 
     openxlsx
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
