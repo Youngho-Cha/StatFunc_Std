@@ -2,7 +2,6 @@
 
 export(export_xlsx)
 export(push_result)
-export(table_digit)
 importFrom(openxlsx,addWorksheet)
 importFrom(openxlsx,createStyle)
 importFrom(openxlsx,createWorkbook)
