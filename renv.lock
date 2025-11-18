@@ -265,6 +265,38 @@
       "Repository": "CRAN",
       "Encoding": "UTF-8"
     },
+    "Export.metrics": {
+      "Package": "Export.metrics",
+      "Version": "0.1.0",
+      "Source": "GitHub",
+      "Title": "Export analysis results to Excel automatically",
+      "Authors@R": "person(\"Youngho\", \"Cha\", , \"cswer123@naver.com\", role = c(\"aut\", \"cre\"))",
+      "Description": "Saves the data frame containing the analysis results to an Excel file",
+      "License": "MIT + file LICENSE",
+      "Encoding": "UTF-8",
+      "Roxygen": "list(markdown = TRUE)",
+      "RoxygenNote": "7.3.3",
+      "Imports": [
+        "openxlsx"
+      ],
+      "Suggests": [
+        "knitr",
+        "rmarkdown",
+        "testthat (>= 3.0.0)"
+      ],
+      "VignetteBuilder": "knitr",
+      "Config/testthat/edition": "3",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "StatFunc_Std",
+      "RemoteUsername": "Youngho-Cha",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "3d1e39fa524487af29cc653a7dcc6145f8ea87a6",
+      "RemoteSubdir": "packages/Export.metrics",
+      "NeedsCompilation": "no",
+      "Author": "Youngho Cha [aut, cre]",
+      "Maintainer": "Youngho Cha <cswer123@naver.com>"
+    },
     "Formula": {
       "Package": "Formula",
       "Version": "1.2-5",
