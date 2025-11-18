@@ -1,0 +1,51 @@
+---
+title: "run_OQ-Export-001"
+output: html_document
+---
+
+# 패키지
+```{r}
+
+library(Export.metrics)
+
+```
+
+# 데이터 및 임시 파일 경로 생성
+```{r}
+
+temp_dir=tempdir()
+output_path=file.path(temp_dir,"oq_test_export.xlsx")
+
+test_df=data.frame(
+  ID=1:5,
+  Value=c("A","B","C","D","E"),
+  stringsAsFactors=FALSE
+)
+
+img_path=file.path(temp_dir,"oq_test_img.png")
+png(img_path)
+plot(1:10,main="OQ Test Image")
+dev.off()
+
+input_list=list(
+  "Data_Part"=test_df,
+  "Image_Part"=img_path
+)
+
+```
+
+# 실제 결과 도출
+```{r}
+
+## 콘솔 이미지 캡처
+export_xlsx(output_list=input_list,file_path=output_path)
+
+## 파일 생성 여부 확인
+file.exists(output_path)
+
+## 엑셀 파일 읽어와서 test_df와 비교
+read_df=openxlsx::read.xlsx(output_path,sheet="Report",startRow=2)
+read_df
+test_df
+
+```

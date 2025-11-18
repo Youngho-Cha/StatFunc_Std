@@ -1,0 +1,58 @@
+---
+title: "run_OQ-Export-002"
+output: html_document
+---
+
+# 패키지
+```{r}
+
+library(Export.metrics)
+library(openxlsx)
+
+```
+
+# 데이터 및 임시 파일 경로 생성
+```{r}
+
+new_data=data.frame(Val=c(10,20))
+
+temp_dir=tempdir()
+mock_path=file.path(temp_dir,"mock.xlsx")
+
+wb=createWorkbook()
+addWorksheet(wb,"Sheet1")
+writeData(wb,"Sheet1",x="Original",startCol=1,startRow=1)
+saveWorkbook(wb,mock_path,overwrite=TRUE)
+
+```
+
+# 실제 결과 도출
+```{r}
+
+push_result(
+  file_path=mock_path,
+  sheet_name="Sheet1",
+  startcol=2,
+  startrow=5,
+  result=new_data
+)
+
+## 새로운 값 입력
+read_result=read.xlsx(
+  mock_path,
+  sheet="Sheet1",
+  rows=c(5,6,7), 
+  cols=2,
+  colNames=TRUE
+)
+
+## 기존에 있던 값 확인
+read_original=read.xlsx(
+  mock_path,
+  sheet="Sheet1",
+  rows=1,
+  cols=1,
+  colNames=FALSE
+)
+
+```

@@ -1,0 +1,46 @@
+---
+title: "run_OQ-Survival-001"
+output: html_document
+---
+
+---
+title: "run_OQ-Survival-001"
+output: html_document
+---
+
+# lung 데이터 로드
+```{r}
+
+lung=survival::lung
+
+time=lung$time
+status=lung$status
+sex=lung$sex
+
+```
+
+# OQ-survival-001
+## 기대 결과(참값) 도출
+```{r}
+
+pred_res_km=survival::survfit(survival::Surv(time,status-1)~sex)
+
+pred_res_class0=summary(pred_res_km[1],times=800)[c("time","surv","lower","upper")]
+pred_res_class1=summary(pred_res_km[2],times=800)[c("time","surv","lower","upper")]
+
+pred_diff=survival::survdiff(survival::Surv(time,status-1)~sex)
+pred_res_pval=pred_diff$pvalue
+
+```
+
+## 실제 결과 도출
+```{r}
+
+act_km=calc_surv_rate(time,800,status-1,sex)
+
+act_res_km=act_km$km
+act_res_class0=act_km$class0
+act_res_class1=act_km$class1
+act_res_pval=act_km$p
+
+```
